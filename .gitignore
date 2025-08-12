@@ -1,0 +1,36 @@
+# Dependencias
+cliente/node_modules/
+server/node_modules/
+
+# Archivos de entorno
+cliente/.env
+server/.env
+.env
+
+# Builds y archivos generados
+cliente/dist/
+server/dist/
+cliente/build/
+server/build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cachés
+.cache/
+cliente/.vite/
+server/.vite/
+*.tmp
+*.temp
+
+# Configuración local de IDE/Editor
+.vscode/
+.idea/
+*.swp
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

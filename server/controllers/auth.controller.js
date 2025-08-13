@@ -33,7 +33,7 @@ export const loginAdmin = async (req, res) => {
         const token = jwt.sign({ admin_id: admin.id, email: admin.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.cookie('token', token, {
             httpOnly: true,
-            secure: false,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'Strict',
             maxAge: 6 * 60 * 60 * 1000 // 6 horas
         });
@@ -68,9 +68,12 @@ export const getCurrentAdmin = async (req, res) => {
         if (!admin) {
             return res.status(404).json({ error: 'Admin no encontrado' });
         }
-        res.status(200).json(admin);
+        res.status(200).json({
+            admin_id: admin.id,
+            email: admin.email,
+            name: admin.name
+        });
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener admin' });
     }
-    res.status(200).json(req.user);
 };

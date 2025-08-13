@@ -13,13 +13,15 @@ import adminRouter from './routes/admin.route.js';
 
 const app = express();
 app.use(cookieParser());
+
 app.use(cors({
-    origin: 'http://127.0.0.1:5500',
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
 
 app.use(express.json());
+
 
 app.use('/api/auth', authRouter);
 app.use('/api/admin', adminRouter);

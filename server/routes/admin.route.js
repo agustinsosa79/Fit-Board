@@ -11,4 +11,4 @@ router.get('/', getAllAdmins);
 router.delete('/:id', deleteAdminById);
 router.get('/:id', getAdminById);
 
-export default router;
+export default router; 

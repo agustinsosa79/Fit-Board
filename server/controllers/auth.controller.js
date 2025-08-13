@@ -71,7 +71,7 @@ export const getCurrentAdmin = async (req, res) => {
         res.status(200).json({
             admin_id: admin.id,
             email: admin.email,
-            name: admin.name
+            nombre: admin.nombre
         });
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener admin' });

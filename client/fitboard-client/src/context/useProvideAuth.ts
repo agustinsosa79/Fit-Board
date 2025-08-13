@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 interface User {
   admin_id: string;
   email: string;
-  name: string;
+  nombre: string;
 }
 
 interface AuthContextType {

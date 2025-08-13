@@ -21,10 +21,11 @@ export const useProvideAuth = (): AuthContextType => {
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch('http://localhost:3000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        credentials: 'include'
       });
       if (!res.ok) throw new Error('Credenciales inválidas');
       const data = await res.json();
@@ -40,7 +41,7 @@ export const useProvideAuth = (): AuthContextType => {
   const logout = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/logout', { method: 'POST' });
+      const res = await fetch('http://localhost:3000/api/auth/logout', { method: 'POST', credentials: 'include' });
       if (res.ok) setUser(null);
     } finally {
       setLoading(false);
@@ -53,7 +54,7 @@ export const useProvideAuth = (): AuthContextType => {
     const fetchUser = async () => {
       setLoading(true);
       try {
-        const res = await fetch('/api/auth/me');
+        const res = await fetch('http://localhost:3000/api/auth/me', { credentials: 'include' });
         if (res.ok) {
           const data = await res.json();
           setUser(data);

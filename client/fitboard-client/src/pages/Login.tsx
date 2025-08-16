@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
+import  logo  from "../assets/logo-fit.png"; // Asegúrate de que la ruta sea correcta
 
 export const Login = () => {
   const { login } = useAuth();
@@ -38,23 +39,23 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-md">
+    <div className="min-h-screen flex items-center justify-center gap-8 bg-gray-950">
+  <div className=" p-20 bg-white rounded-xl shadow-md w-140 h-150"  style={{ padding: "2rem"}}>
         {/* Logo / Imagen */}
-        <div className="flex justify-center mb-4">
-          <img
-            src="/logo.png" // O import desde assets
-            alt="Logo"
-            className="h-20 w-20 object-contain"
-          />
-        </div>
-
-        <h2 className="text-center text-2xl font-bold text-gray-700 mb-4">
-          Iniciar Sesión
-        </h2>
+        <div className="flex gap-px flex-col items-center mb-8">
+  <img
+    src={logo}
+    alt="Logo"
+    className="h-50 w-50 object-contain bg-black rounded-full shadow-neutral-900"
+  />
+  <h2 className="text-center text-2xl font-bold text-gray-700 mt-4">
+    Iniciar Sesión
+  </h2>
+</div>
 
         {/* Formulario de Login */}
-        <Form onSubmit={onSubmit} className="space-y-4">
+        <Form onSubmit={onSubmit} className="flex flex-col space-y-4">
+          <div className="flex flex-col gap-10 w-full" style={{ marginTop: "5rem" }}>
           <Input
             isRequired
             errorMessage="Ingrese un email válido"
@@ -63,8 +64,11 @@ export const Login = () => {
             name="email"
             placeholder="correo@ejemplo.com"
             type="email"
+            variant="faded"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            size="md"
+            radius="md"
             />
           <Input
             isRequired
@@ -74,9 +78,13 @@ export const Login = () => {
             name="password"
             placeholder="********"  
             type="password"
+            variant="faded"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            size="md"
+            radius="md"
             />
+            </div>
           <div className="flex flex-col items-center w-full">
 
   <div className="h-6 mb-2 w-full flex justify-center">
@@ -98,10 +106,10 @@ export const Login = () => {
 
   <Button
     type="submit"
-    color="success"
+    color="primary"
     isLoading={loading}
-    className="w-full flex justify-center font-bold text-amber-50"
-    radius="full"
+    className="w-full flex justify-center font-bold text-amber-50 "
+    radius="lg"
     variant="shadow"
     size="md"
   >

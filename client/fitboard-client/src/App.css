@@ -1,0 +1,72 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+.css-o5dvil-MuiButtonBase-root-MuiIconButton-root {
+    display: none !important;
+}
+
+
+.css-sicqvh-MuiButtonBase-root-MuiListItemButton-root {
+    -webkit-tap-highlight-color: transparent;
+    background-color: black !important;
+    user-select: none;
+    vertical-align: middle;
+    appearance: none;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    min-width: 0px;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: left;
+    color: rgba(10, 13, 17, 0.9);
+    cursor: pointer;
+    opacity: 1;
+    display: flex;
+    outline: 0px;
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+    margin: 0px 0px 2px;
+    text-decoration: none;
+    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    padding: 10px 12px;
+    border-radius: 8px;
+    gap: 15px;
+}
+
+
+.css-sicqvh-MuiButtonBase-root-MuiListItemButton-root:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(239, 243, 248, 0.9) !important;
+}
+
+
+
+.css-sicqvh-MuiButtonBase-root-MuiListItemButton-root:hover {
+    color: white !important;
+}
+
+
+
+
+.css-whu3bg {
+    display: flex;
+    margin-top: 15rem !important;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 490px;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: rgba(73, 190, 255, 0.125);
+}

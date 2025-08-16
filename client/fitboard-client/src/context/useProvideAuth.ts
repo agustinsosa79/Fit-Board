@@ -29,7 +29,7 @@ export const useProvideAuth = (): AuthContextType => {
       });
       if (!res.ok) throw new Error('Credenciales inválidas');
       const data = await res.json();
-      setUser(data.admin); // Ajustá según tu backend
+      setUser(data.admin); 
     } catch (error) {
       setUser(null);
       throw error;
@@ -60,9 +60,11 @@ export const useProvideAuth = (): AuthContextType => {
           setUser(data);
         } else {
           setUser(null);
+          console.error('Error fetching user data');
         }
       } catch {
         setUser(null);
+        console.error('Error fetching user data');
       } finally {
         setLoading(false);
       }

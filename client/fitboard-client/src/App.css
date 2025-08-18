@@ -70,3 +70,17 @@
     border-radius: 8px;
     background-color: rgba(73, 190, 255, 0.125);
 }
+
+.permanent-marker-regular {
+  font-family: "Permanent Marker", cursive;
+  font-weight: 100;
+  font-style: normal;
+}
+
+
+
+.major-mono-display-regular {
+  font-family: "Major Mono Display", monospace;
+  font-weight: bolder;
+  font-style: normal;
+}

@@ -1,0 +1,34 @@
+import { type Cliente } from "../types/clientes"
+
+export const fetchClientes = async (): Promise<Cliente[]> => {
+    try {
+        const response = await fetch("http://localhost:3000/api/clientes", {
+            credentials: "include"
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching clientes:", error);
+        throw error;
+    }
+}
+
+
+
+export const createCliente = async (cliente: Cliente): Promise<Cliente> => {
+    try {
+        const response = await fetch("http://localhost:3000/api/clientes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(cliente),
+            credentials: "include"
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error creating cliente:", error);
+        throw error;
+    }
+}

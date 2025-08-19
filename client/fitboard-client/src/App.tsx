@@ -1,7 +1,7 @@
 import { HeroUIProvider } from '@heroui/react'
 import { AuthProvider } from './context/AuthProvider'
 import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router' 
+import { BrowserRouter, Routes, Route } from 'react-router-dom' 
 import { Login } from './pages/Login' 
 import { PrivateRoute } from './components/private/PrivateRoute'
 import { Dashboard } from './pages/Dashboard'
@@ -10,6 +10,7 @@ import { Planes } from './pages/Planes'
 import {Layout} from './components/layouts/Layout'
 import { Turnos } from './components/turnos/Turnos'
 import { Ajustes } from './components/ajustes/Ajustes'
+import { ClientesProvider } from './context/ClientesContext'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <>
+    <ClientesProvider>
       <HeroUIProvider>
         <AuthProvider>
           <BrowserRouter>
@@ -35,6 +37,7 @@ function App() {
           </BrowserRouter>
         </AuthProvider>
       </HeroUIProvider>
+    </ClientesProvider>
     </>
   )
 }

@@ -39,7 +39,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center gap-8 bg-gray-950">
+    <div className="min-h-screen flex items-center justify-center gap-8 bg-gradient-to-tl from-[#0e012b] via-[#441cac] to-[#2b40c4]">
   <div className=" p-20 bg-white rounded-xl shadow-md w-140 h-150"  style={{ padding: "2rem"}}>
         {/* Logo / Imagen */}
         <div className="flex gap-px flex-col items-center mb-8">
@@ -106,9 +106,8 @@ export const Login = () => {
 
   <Button
     type="submit"
-    color="primary"
     isLoading={loading}
-    className="w-full flex justify-center font-bold text-amber-50 "
+    className="w-full flex justify-center font-bold text-amber-50 bg-gradient-to-r from-[#010b42] via-[#3c06cf] to-[#8403da]"
     radius="lg"
     variant="shadow"
     size="md"

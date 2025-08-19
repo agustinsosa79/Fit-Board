@@ -1,5 +1,5 @@
 interface Cliente {
-    id: number;
+    id: string;
     nombre: string;
     email: string
     dni: string;

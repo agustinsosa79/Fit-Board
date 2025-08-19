@@ -32,3 +32,22 @@ export const createCliente = async (cliente: Cliente): Promise<Cliente> => {
         throw error;
     }
 }
+
+export async function deleteCliente(id: string) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/clientes/${id}`, {
+      method: "DELETE",
+      credentials: "include"
+    });
+
+    if (!res.ok) {
+      const error = await res.text();
+      throw new Error(error);
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error deleting cliente (service):", error);
+    throw error;
+  }
+}

@@ -1,5 +1,6 @@
 import { Sidebar, MenuItem, Logo } from "react-mui-sidebar";
 import HomeIcon from '@mui/icons-material/Home';
+import { Link } from "react-router-dom";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import ArticleIcon from '@mui/icons-material/Article';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -19,7 +20,7 @@ export const DesktopSidebar = () => {
 
     return (
     <>
-        <div className="bg-black  h-screen hidden lg:flex flex-col ">
+        <div className="bg-black h-screen hidden lg:flex flex-col fixed top-0 left-0 z-50 w-[270px]">
         <Sidebar
         width={"270px"}
         mode="dark"
@@ -29,31 +30,40 @@ export const DesktopSidebar = () => {
         onLogout={handleConfirmLogout}
         designation={user?.admin_id ? "Administrador" : "Usuario"}
         >
+            <div className="p-4 flex items-center justify-center !mb-10">
         <Logo img={logo}>FitCore</Logo>
+            </div>
             <div className="flex flex-col gap-6 !ml-5 ">
-            <MenuItem icon={<HomeIcon />} link="/" >
+                <Link to={"/"} >
+            <MenuItem icon={<HomeIcon />} >
                 <span className=" major-mono-display-regular">Inicio</span>
             </MenuItem>
-            <MenuItem link="/clientes" icon={<PersonSearchIcon />}>
-                <span className="major-mono-display-regular ">Clientes</span>
-            </MenuItem>
-            <MenuItem link="/planes" icon={<ArticleIcon />}>
-                <span className="major-mono-display-regular">Planes</span>
-            </MenuItem>
-            <MenuItem link="/turnos" icon={<EditCalendarIcon />}>
-                <span className="major-mono-display-regular ">Turnos</span>
-            </MenuItem>
-            <MenuItem link="/ajustes" icon={<SettingsIcon />}>
-                <span className="major-mono-display-regular">Ajustes</span>
-            </MenuItem>
-              {/* Botón de logout */}
-            
+                </Link>
+                <Link to={"/clientes"}>
+                    <MenuItem icon={<PersonSearchIcon />}>
+                        <span className="major-mono-display-regular ">Clientes</span>
+                    </MenuItem>
+                </Link>
+                <Link to={"/planes"}>
+                    <MenuItem icon={<ArticleIcon />}>
+                        <span className="major-mono-display-regular">Planes</span>
+                    </MenuItem>
+                </Link>
+                <Link to={"/turnos"}>
+                    <MenuItem icon={<EditCalendarIcon />}>
+                        <span className="major-mono-display-regular ">Turnos</span>
+                    </MenuItem>
+                </Link>
+                <Link to={"/ajustes"}>
+                    <MenuItem icon={<SettingsIcon />}>
+                        <span className="major-mono-display-regular">Reportes</span>
+                    </MenuItem>
+                </Link>
             </div>
         </Sidebar>
-                <Button onClick={handleConfirmLogout} className="bg-red-500 flex text-white font-bold  top-0 left-5 m-1 w-56 items-center align-center">Cerrar sesión</Button>
+                <Button variant="shadow" color="secondary" onClick={handleConfirmLogout} className="flex text-white font-bold  top-0 left-5 m-1 w-56 items-center justify-center">Cerrar sesión</Button>
     </div>
 
-      {/* Modal de confirmación */}
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl" style={{padding: "30px"}} className="bg-gray-950 text-white">
         <ModalContent>
         {(onClose) => (

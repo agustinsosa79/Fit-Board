@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 interface User {
-  admin_id: string;
+  admin_id: number;
   email: string;
   nombre: string;
 }

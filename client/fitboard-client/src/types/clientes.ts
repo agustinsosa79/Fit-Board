@@ -1,8 +1,11 @@
 interface Cliente {
     id: string;
     nombre: string;
-    email: string
+    edad: string;
+    email: string;
     dni: string;
+    telefono: string;
+    direccion: string;
     estado: string;
 }
 

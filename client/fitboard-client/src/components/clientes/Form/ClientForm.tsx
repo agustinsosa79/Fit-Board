@@ -7,12 +7,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 export const ClientForm = () => {
     const { agregarCliente } = useClients();
-   const [error, setError] = useState<{ nombre?: string; email?: string; dni?: string }>({});
+   const [error, setError] = useState<{ nombre?: string; email?: string; dni?: string; telefono?: string, edad?: string, direccion?: string }>({});
    const [clienteAgregado, setClienteAgregado] = useState(false);
 
 
 
-    const [form, setForm] = useState({ nombre: '', email: '', dni: '' });
+    const [form, setForm] = useState({ nombre: '', edad: '', email: '', dni: '', telefono: '', direccion: '' });
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,7 +39,7 @@ if (Object.keys(errores).length > 0) {
         try {
             const clienteCreado = await createCliente(nuevoCliente);
             agregarCliente(clienteCreado);
-            setForm({ nombre: "", email: "", dni: "" });
+            setForm({ nombre: "", edad: "", email: "", dni: "", telefono: "", direccion: "" });
             setClienteAgregado(true);
             setTimeout(() => {
                 setClienteAgregado(false);
@@ -54,12 +54,12 @@ if (Object.keys(errores).length > 0) {
     };
 
     return (
-        <Form validationErrors={error}  onSubmit={handleSubmit} className='lg:bg-black/80 rounded-2xl w-135 h-145 !flex !flex-col !gap-13 !major-mono-display-regular !m-20 !p-20'>
+        <Form validationErrors={error}  onSubmit={handleSubmit} className='lg:bg-black/80 rounded-2xl w-135 h-auto !flex !flex-col !gap-12 !major-mono-display-regular !m-10 !p-18'>
             <h1 className='!major-mono-display-regular text-white !ml-19 major-mono-display-regular text-2xl font-bold'>Crear Cliente</h1>
             <Input
                 name='nombre'
                 isRequired
-                label="Nombre"
+                label="Nombre completo"
                 labelPlacement='outside'
                 type="text"
                 value={form.nombre}
@@ -72,6 +72,23 @@ if (Object.keys(errores).length > 0) {
                 size='md'
                 className=' !text-black !font-bold caret-blue-400  lg:!major-mono-display-regular'
             />
+        <Input
+            name='edad'
+            isRequired
+            label="Edad"
+            labelPlacement='outside'
+            type="number"
+            value={form.edad}
+            onChange={(e) => setForm({ ...form, edad: e.target.value })}
+            placeholder="Edad"
+            variant='flat'
+            errorMessage={error.edad}
+            //@ts-expect-error-ignore
+            color='undefined'
+            size='md'
+            radius='sm'
+            className=' !text-black caret-blue-400 !font-bold !major-mono-display-regular'
+        />
             <Input
                 name='email'
                 isRequired
@@ -83,7 +100,6 @@ if (Object.keys(errores).length > 0) {
                 placeholder="Email"
                 variant='flat'
                 errorMessage={error.email}
-
                 //@ts-expect-error-ignore
                 color='undefined'
                 size='md'
@@ -107,9 +123,41 @@ if (Object.keys(errores).length > 0) {
                 color='undefined'
                 className=' !text-black caret-blue-400 !font-bold'
                 />
+                <Input
+                radius='sm'
+                name='telefono'
+                isRequired
+                label="Teléfono"
+                labelPlacement='outside'
+                type="text"
+                value={form.telefono}
+                onChange={(e) => setForm({ ...form, telefono: e.target.value })}
+                placeholder="Teléfono"
+                variant='flat'
+                size='md'
+                //@ts-expect-error-ignore
+                color='undefined'
+                className=' !text-black caret-blue-400 !font-bold'
+                />
+                <Input
+                    radius='sm'
+                    name='direccion'
+                    isRequired
+                    label="Dirección"
+                    labelPlacement='outside'
+                    type="text"
+                    value={form.direccion}
+                    onChange={(e) => setForm({ ...form, direccion: e.target.value })}
+                    placeholder="Dirección"
+                    variant='flat'
+                    size='md'
+                    //@ts-expect-error-ignore
+                    color='undefined'
+                    className=' !text-black caret-blue-400 !font-bold'
+                />
                 <div className='flex justify-center'>
-            <Button type='submit' variant="shadow" color="success" className='font-semibold text-white !p-3 !mr-2'>Crear Cliente</Button>
-            <Button onClick={() => setForm({ nombre: "", email: "", dni: "" })} type="reset" variant="shadow" color='secondary' className='font-semibold !mr-5'>Resetear</Button>
+            <Button type='submit' variant="shadow" color="success" className='font-semibold text-white !p-3 !mr-2'>Agregar Cliente</Button>
+            <Button onClick={() => setForm({ nombre: "", edad: "", email: "", dni: "", telefono: "", direccion: "" })} type="reset" variant="shadow" color='secondary' className='font-semibold !mr-5'>Resetear</Button>
                 <AnimatePresence>
 
                 {clienteAgregado && <motion.div

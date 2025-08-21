@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 
 interface User {
-  admin_id: number;
+  admin_id: string;
   email: string;
   nombre: string;
 }
 
 interface AuthContextType {
-  user: User | null;
+  user: User | undefined ;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   isAuthenticated: () => boolean;
@@ -15,7 +15,7 @@ interface AuthContextType {
 }
 
 export const useProvideAuth = (): AuthContextType => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState<boolean>(true);
 
   const login = async (email: string, password: string) => {
@@ -31,7 +31,7 @@ export const useProvideAuth = (): AuthContextType => {
       const data = await res.json();
       setUser(data.admin); 
     } catch (error) {
-      setUser(null);
+      setUser(undefined);
       throw error;
     } finally {
       setLoading(false);
@@ -42,7 +42,7 @@ export const useProvideAuth = (): AuthContextType => {
     setLoading(true);
     try {
       const res = await fetch('http://localhost:3000/api/auth/logout', { method: 'POST', credentials: 'include' });
-      if (res.ok) setUser(null);
+      if (res.ok) setUser(undefined);
     } finally {
       setLoading(false);
     }
@@ -59,11 +59,11 @@ export const useProvideAuth = (): AuthContextType => {
           const data = await res.json();
           setUser(data);
         } else {
-          setUser(null);
+          setUser(undefined);
           console.error('Error fetching user data');
         }
       } catch {
-        setUser(null);
+        setUser(undefined);
         console.error('Error fetching user data');
       } finally {
         setLoading(false);
@@ -72,5 +72,5 @@ export const useProvideAuth = (): AuthContextType => {
     fetchUser();
   }, []);
 
-  return { user, login, logout, isAuthenticated, loading };
+  return { user , login, logout, isAuthenticated, loading };
 };

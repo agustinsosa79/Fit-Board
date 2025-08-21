@@ -14,7 +14,7 @@ interface ClientContextType  {
 
 const ClientesContext = createContext<ClientContextType | undefined>(undefined);
 // eslint-disable-next-line react-refresh/only-export-components
-  export const useClients = () => {  
+    export const useClients = () => {  
     const context = useContext(ClientesContext)
     if(!context) {
         throw new Error("useClients must be used within a ClientesProvider");

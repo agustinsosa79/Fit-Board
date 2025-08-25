@@ -1,4 +1,5 @@
-import { createPlan, getAllPlans, getPlanById, deletePlan, updatePlan } from "../models/planes.js";
+import e from "express";
+import { createPlan, getAllPlans, getPlanById, deletePlan, updatePlan, getPlanByClientes } from "../models/planes.js";
 
 
 export const getPlanes = async (req, res) => {
@@ -44,6 +45,13 @@ export const deleteExistingPlan = async (req, res) => {
     const { id } = req.params;
     const { admin_id } = req.user;
     try {
+        const clientes = await getPlanByClientes(id);
+        if (clientes.length > 0) {
+            console.log('No se puede eliminar el plan porque tiene clientes asociados');
+            return res.status(400).json({ error: 'No se puede eliminar el plan porque tiene clientes asociados' });
+            
+        } 
+        
         const deleted = await deletePlan(id, admin_id);
         if (deleted) {
             res.status(204).send();

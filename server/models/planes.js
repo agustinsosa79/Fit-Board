@@ -10,6 +10,11 @@ const getPlanById = async (id, admin_id) => {
     return result.rows[0];
 };
 
+const getPlanByClientes = async (id) => {
+    const result = await pool.query("SELECT * FROM clientes WHERE plan_id = $1", [id]);
+    return result.rows;
+};
+
 const createPlan = async (nombre, precio, duracion, descripcion, admin_id) => {
     const result = await pool.query(
         "INSERT INTO planes (nombre, precio, duracion, descripcion, admin_id) VALUES ($1, $2, $3, $4, $5) RETURNING *",
@@ -32,4 +37,4 @@ const updatePlan = async (id, data, admin_id) => {
     return result.rowCount > 0;  // true si actualizó algo
 };
 
-export { getAllPlans, createPlan, deletePlan, updatePlan, getPlanById };
+export { getAllPlans, createPlan, deletePlan, updatePlan, getPlanById, getPlanByClientes };

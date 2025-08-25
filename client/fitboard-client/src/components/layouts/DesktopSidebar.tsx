@@ -6,7 +6,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import SettingsIcon from '@mui/icons-material/Settings';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import logo from "../../assets/logo-fit.png"; 
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../../context/clientes-context/useAuth";
 import { useDisclosure, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@heroui/react";
 
 
@@ -20,7 +20,7 @@ export const DesktopSidebar = () => {
 
     return (
     <>
-        <div className="bg-black h-screen hidden lg:flex flex-col fixed top-0 left-0 z-50 w-[270px]">
+        <div className="bg-black h-screen hidden lg:flex flex-col fixed top-0 left-0 z-50 w-[270px] !shadow-xl !shadow-black">
         <Sidebar
         width={"270px"}
         mode="dark"
@@ -36,27 +36,27 @@ export const DesktopSidebar = () => {
             <div className="flex flex-col gap-6 !ml-5 ">
                 <Link to={"/"} >
             <MenuItem icon={<HomeIcon />} >
-                <span className=" major-mono-display-regular">Inicio</span>
+                <span className="concert-one-regular text-lg">Inicio</span>
             </MenuItem>
                 </Link>
                 <Link to={"/clientes"}>
                     <MenuItem icon={<PersonSearchIcon />}>
-                        <span className="major-mono-display-regular ">Clientes</span>
+                        <span className="concert-one-regular text-lg">Clientes</span>
                     </MenuItem>
                 </Link>
                 <Link to={"/planes"}>
                     <MenuItem icon={<ArticleIcon />}>
-                        <span className="major-mono-display-regular">Planes</span>
+                        <span className="concert-one-regular text-lg">Planes</span>
                     </MenuItem>
                 </Link>
                 <Link to={"/turnos"}>
                     <MenuItem icon={<EditCalendarIcon />}>
-                        <span className="major-mono-display-regular ">Turnos</span>
+                        <span className="concert-one-regular text-lg">Turnos</span>
                     </MenuItem>
                 </Link>
                 <Link to={"/ajustes"}>
                     <MenuItem icon={<SettingsIcon />}>
-                        <span className="major-mono-display-regular">Reportes</span>
+                        <span className="concert-one-regular text-lg">Reportes</span>
                     </MenuItem>
                 </Link>
             </div>

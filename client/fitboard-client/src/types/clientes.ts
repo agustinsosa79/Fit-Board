@@ -7,6 +7,7 @@ interface Cliente {
     telefono: string;
     direccion: string;
     estado: string;
+    plan_id: string | null;
 }
 
 

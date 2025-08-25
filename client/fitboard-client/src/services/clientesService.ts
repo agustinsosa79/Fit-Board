@@ -33,7 +33,7 @@ export const createCliente = async (cliente: Cliente): Promise<Cliente> => {
     }
 }
 
-export async function deleteCliente(id: string) {
+export const deleteCliente = async (id: string)  => {
   try {
     const res = await fetch(`http://localhost:3000/api/clientes/${id}`, {
       method: "DELETE",
@@ -51,3 +51,22 @@ export async function deleteCliente(id: string) {
     throw error;
   }
 }
+
+
+export const updateCliente = async (id: string, cliente: Cliente): Promise<Cliente> => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/clientes/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(cliente),
+      credentials: "include"
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error updating cliente:", error);
+    throw error;
+  }
+};

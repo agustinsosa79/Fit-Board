@@ -1,6 +1,6 @@
 import { fetchClientes } from "../../services/clientesService";
 import type { Cliente } from "../../types/clientes";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";    
 
 
 export const ClientesInactivos = () => {

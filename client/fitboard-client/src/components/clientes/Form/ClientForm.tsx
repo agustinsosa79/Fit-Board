@@ -1,45 +1,47 @@
 import { useState } from 'react'
 import { type Cliente } from '../../../types/clientes';
 import { createCliente } from '../../../services/clientesService';
-import { useClients } from '../../../context/ClientesContext';
-import { Form, Input, Button, Alert } from '@heroui/react';
+import { useClients } from '../../../context/clientes-context/ClientesContext';
+import { Form, Input, Button, Alert, Select, SelectItem } from '@heroui/react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { usePlanes } from '../../../context/planes-context/PlanesContext';
 
 export const ClientForm = () => {
     const { agregarCliente } = useClients();
-   const [error, setError] = useState<{ nombre?: string; email?: string; dni?: string; telefono?: string, edad?: string, direccion?: string }>({});
-   const [clienteAgregado, setClienteAgregado] = useState(false);
-
-
-
-    const [form, setForm] = useState({ nombre: '', edad: '', email: '', dni: '', telefono: '', direccion: '' });
+    const { planes } = usePlanes();
+    const [error, setError] = useState<{ nombre?: string; email?: string; dni?: string; telefono?: string, edad?: string, direccion?: string, plan?: string }>({});
+    const [clienteAgregado, setClienteAgregado] = useState(false);
+    const [form, setForm] = useState({ nombre: '', edad: '', email: '', dni: '', telefono: '', direccion: '', plan_id: '' });
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError({});
 
-        const nuevoCliente: Cliente = { id: crypto.randomUUID(), ...form, estado: 'activo' };
+
+        console.log("Plan seleccionado:", form.plan_id);
+
+        const nuevoCliente: Cliente = { id: crypto.randomUUID(), ...form, estado: 'activo', plan_id: form.plan_id || null };
         const errores: typeof error = {};
-if (!form.nombre) errores.nombre = "Nombre es obligatorio";
-else if (form.nombre.length < 3) errores.nombre = "El nombre debe tener al menos 3 caracteres";
-else if (form.nombre.length > 20) errores.nombre = "El nombre debe tener como máximo 20 caracteres";
+        if (!form.nombre) errores.nombre = "Nombre es obligatorio";
+            else if (form.nombre.length < 3) errores.nombre = "El nombre debe tener al menos 3 caracteres";
+            else if (form.nombre.length > 20) errores.nombre = "El nombre debe tener como máximo 20 caracteres";
 
-if (!form.email) errores.email = "Email es obligatorio";
-else if (!/\S+@\S+\.\S+/.test(form.email)) errores.email = "Email no válido";
+        if (!form.email) errores.email = "Email es obligatorio";
+            else if (!/\S+@\S+\.\S+/.test(form.email)) errores.email = "Email no válido";
 
-if (!form.dni) errores.dni = "DNI es obligatorio";
-else if (form.dni.length < 8) errores.dni = "DNI debe tener al menos 8 caracteres";
+        if (!form.dni) errores.dni = "DNI es obligatorio";
+            else if (form.dni.length < 8) errores.dni = "DNI debe tener al menos 8 caracteres";
 
 // si hay errores, los mostramos y detenemos la ejecución
-if (Object.keys(errores).length > 0) {
-    setError(errores);
-    setTimeout(() => setError({}), 5000);
-    return;
+        if (Object.keys(errores).length > 0) {
+            setError(errores);
+            setTimeout(() => setError({}), 5000);
+        return;
 }
         try {
             const clienteCreado = await createCliente(nuevoCliente);
             agregarCliente(clienteCreado);
-            setForm({ nombre: "", edad: "", email: "", dni: "", telefono: "", direccion: "" });
+            setForm({ nombre: "", edad: "", email: "", dni: "", telefono: "", direccion: "", plan_id: "" });
             setClienteAgregado(true);
             setTimeout(() => {
                 setClienteAgregado(false);
@@ -54,8 +56,8 @@ if (Object.keys(errores).length > 0) {
     };
 
     return (
-        <Form validationErrors={error}  onSubmit={handleSubmit} className='lg:bg-black/80 rounded-2xl w-135 h-auto !flex !flex-col !gap-12 !major-mono-display-regular !m-10 !p-18'>
-            <h1 className='!major-mono-display-regular text-white !ml-19 major-mono-display-regular text-2xl font-bold'>Crear Cliente</h1>
+        <Form validationErrors={error}  onSubmit={handleSubmit} className='lg:bg-black/90 !text-white  rounded-2xl shadow-2xl shadow-black w-135 h-auto !flex !flex-col !gap-9  !m-10 !p-20'>
+            <h1 className='!major-mono-display-regular text-white !ml-25 !mb-3 concert-one-regular text-3xl font-bold'>Crear Cliente</h1>
             <Input
                 name='nombre'
                 isRequired
@@ -70,7 +72,7 @@ if (Object.keys(errores).length > 0) {
                 color='undefined' 
                 radius='sm'
                 size='md'
-                className=' !text-black !font-bold caret-blue-400  lg:!major-mono-display-regular'
+                className=' !font-bold caret-blue-400 shadow-xl shadow-black  lg:!major-mono-display-regular'
             />
         <Input
             name='edad'
@@ -87,7 +89,7 @@ if (Object.keys(errores).length > 0) {
             color='undefined'
             size='md'
             radius='sm'
-            className=' !text-black caret-blue-400 !font-bold !major-mono-display-regular'
+            className=' caret-blue-400 !font-bold shadow-xl shadow-black !major-mono-display-regular'
         />
             <Input
                 name='email'
@@ -104,7 +106,7 @@ if (Object.keys(errores).length > 0) {
                 color='undefined'
                 size='md'
                 radius='sm'
-                className=' !text-black caret-blue-400 !font-bold !major-mono-display-regular'
+                className=' caret-blue-400 shadow-xl shadow-black !font-bold !major-mono-display-regular'
                 />
             <Input
                 radius='sm'
@@ -121,7 +123,7 @@ if (Object.keys(errores).length > 0) {
                 size='md'
                 //@ts-expect-error-ignore
                 color='undefined'
-                className=' !text-black caret-blue-400 !font-bold'
+                className='shadow-xl shadow-black caret-blue-400 !font-bold'
                 />
                 <Input
                 radius='sm'
@@ -137,7 +139,7 @@ if (Object.keys(errores).length > 0) {
                 size='md'
                 //@ts-expect-error-ignore
                 color='undefined'
-                className=' !text-black caret-blue-400 !font-bold'
+                className='shadow-xl shadow-black caret-blue-400 !font-bold'
                 />
                 <Input
                     radius='sm'
@@ -153,11 +155,34 @@ if (Object.keys(errores).length > 0) {
                     size='md'
                     //@ts-expect-error-ignore
                     color='undefined'
-                    className=' !text-black caret-blue-400 !font-bold'
+                    className='shadow-xl shadow-black caret-blue-400 !font-bold'
                 />
+                <Select
+                    radius='sm'
+                    name='Plan'
+                    isRequired
+                    aria-label='Plan'
+                    //@ts-expect-error-ignore
+                    color='undefined'
+                    className='shadow-xl shadow-black !font-bold'
+                    defaultSelectedKeys={form.plan_id ? [form.plan_id] : []}
+                    labelPlacement='outside'
+                    label="Plan"
+                    placeholder="Selecciona un plan"
+                    selectedKeys={form.plan_id ? [form.plan_id] : []}
+                    onChange={(e) => setForm({ ...form, plan_id: e.target.value })}
+                    isInvalid={!!error.plan}
+                    errorMessage={error.plan}
+                    >
+                    {planes.map((plan) => (
+                        <SelectItem className='!p-3 border-b-1 border-black/90  rounded-none dark' key={plan.id} textValue={plan.nombre}>
+                            {plan.nombre} — {plan.duracion} meses — ${plan.precio.toLocaleString()}
+                        </SelectItem>
+                    ))}
+                </Select>
                 <div className='flex justify-center'>
-            <Button type='submit' variant="shadow" color="success" className='font-semibold text-white !p-3 !mr-2'>Agregar Cliente</Button>
-            <Button onClick={() => setForm({ nombre: "", edad: "", email: "", dni: "", telefono: "", direccion: "" })} type="reset" variant="shadow" color='secondary' className='font-semibold !mr-5'>Resetear</Button>
+                    <Button type='submit' variant="shadow" color="success" className='font-semibold text-white shadow-lg !p-3 !mr-2' >Agregar Cliente</Button>
+                    <Button onPress={() => setForm({ nombre: "", edad: "", email: "", dni: "", telefono: "", direccion: "", plan_id: "" })} type="reset" variant="shadow" color='secondary' className='font-semibold !mr-5'>Resetear</Button>
                 <AnimatePresence>
 
                 {clienteAgregado && <motion.div

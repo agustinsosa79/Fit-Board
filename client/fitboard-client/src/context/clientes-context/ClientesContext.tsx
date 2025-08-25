@@ -1,6 +1,6 @@
-import type { Cliente } from '../types/clientes';
+import type { Cliente } from '../../types/clientes';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { fetchClientes } from '../services/clientesService';
+import { fetchClientes } from '../../services/clientesService';
 
 
 interface ClientContextType  {

@@ -12,17 +12,31 @@ import {
   ModalFooter,
   ModalContent,
   addToast,
+  Input,
 } from "@heroui/react";
 import { Button } from "@heroui/react";
 import { useClients } from "../../context/clientes-context/ClientesContext";
+import type { Planes } from "../../types/planes";
 
 export const ListaPlanes: React.FC = () => {
   const { clientes } = useClients();
-  const { planes, eliminarPlan } = usePlanes();
+  const { planes, eliminarPlan, actualizarPlan } = usePlanes();
   const [modal, setModal] = useState<{ isOpen: boolean; planId: string }>({
     isOpen: false,
     planId: "",
   });
+  const [edit, setEdit] = useState<{ isOpen: boolean; planId: string }>({ 
+    isOpen: false,
+    planId: "",}
+  )
+  const [form, setForm] = useState({
+    id: '',
+    nombre: '' ,
+    descripcion: '',
+    duracion: 0,
+    precio: 0
+
+  }as Planes)
 
   const handleDelete = (id: string) => {
     eliminarPlan(id);
@@ -36,6 +50,24 @@ export const ListaPlanes: React.FC = () => {
     }).format(amount);
   }
 
+
+  const handleEdit = (planId: string) => {
+    const plan = planes.find(p => p.id === planId)
+    if (!plan) {
+      <p>Plan no encontrado</p>
+      return
+    }
+    setForm({
+      id: plan.id,
+      nombre: plan?.nombre,
+      descripcion: plan?.descripcion,
+      duracion: plan?.duracion,
+      precio: plan?.precio
+    })
+    setEdit({isOpen: true, planId})
+  }
+  
+
   return (
     <>
       <h2 className="concert-one-regular text-2xl text-center !m-6">
@@ -47,9 +79,9 @@ export const ListaPlanes: React.FC = () => {
       )}
 
       <ScrollShadow hideScrollBar className="w-[750px] h-[700px]">
-        <div className="!grid grid-cols-1 sm:grid-cols-2 !lg:grid-cols-3 !gap-6 !p-6">
+        <div className="!grid grid-cols-1 sm:grid-cols-2 !lg:grid-cols-3 !gap-0 !p-0">
           {planes.map(({ id, precio, nombre, duracion, descripcion }) => (
-            <Card key={id} shadow="sm" className=" text-white  !p-5 !mt-2 rounded-lg bg-white/4 border border-white/8">
+            <Card key={id} shadow="sm" className=" text-white  !p-5 !ml-10 !mt-2 rounded-lg bg-white/4 border border-white/8">
               <CardHeader className="!flex !flex-col !items-start">
                 <h2 className="!text-xl !font-bold !mt-3 !mb-4">{nombre}</h2>
                 <div className="bg-black/20 !border !border-white/10 rounded-2xl w-full !p-2">
@@ -67,11 +99,19 @@ export const ListaPlanes: React.FC = () => {
 
                 <span className="text-lg font-bold bg-black/20 !border rounded-2xl  !border-white/10 !m-1 !p-2">Precio: {formatCurrency(precio)}</span>
                 <Button
+                onPress={() => handleEdit(id)}
+                size="sm"
+
+                className="!p-3 !ml-4 "
+                >
+                  Editar Plan
+                </Button>
+                <Button
                   onPress={() => setModal({ isOpen: true, planId: id })}
                   color="danger"
-                  radius="md"
+                  radius="sm"
                   size="sm"
-                  className="!p-3"
+                  className="!p-3 !m-1"
                 >
                   Eliminar Plan
                 </Button>
@@ -135,6 +175,56 @@ export const ListaPlanes: React.FC = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+
+      <Modal
+  closeButton={false}
+  isOpen={edit.isOpen}
+  onOpenChange={(open) => setEdit({ isOpen: open, planId: edit.planId })}
+>
+  <ModalContent>
+    <ModalHeader>
+      <h2>Edita el plan</h2>
+    </ModalHeader>
+    <ModalBody>
+      <Input
+        type="text"
+        value={form.nombre}
+        onChange={(e) => setForm({ ...form, nombre: e.target.value })}
+      />
+      <Input
+        type="text"
+        value={form.descripcion}
+        onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
+      />
+      <Input
+        type="text"
+        value={form.duracion.toString()}
+        onChange={(e) => setForm({ ...form, duracion: Number(e.target.value) })}
+      />
+      <Input 
+        type="text"
+        value={form.precio.toString()}
+        onChange={(e) => setForm({ ...form, precio: Number(e.target.value) })}
+      />
+    </ModalBody>
+    <ModalFooter>
+      <Button
+        onPress={async () => {
+          await actualizarPlan(form)
+          // actualiza localmente para que se vea en la UI
+          setEdit({ isOpen: false, planId: '' }); // cerrar modal
+          addToast({
+            title: "Plan actualizado",
+            description: "El plan se actualizó correctamente.",
+            color: "success",
+          });
+        }}
+      >
+        Guardar
+      </Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>
     </>
   );
 };

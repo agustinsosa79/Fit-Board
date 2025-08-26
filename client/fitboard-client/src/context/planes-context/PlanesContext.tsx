@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getPlanes, createPlan, deletePlan} from "../../services/planesService";
+import { getPlanes, createPlan, deletePlan, updatePlan} from "../../services/planesService";
 import type { Planes } from "../../types/planes";
 
 interface PlanesContextType {
@@ -7,6 +7,7 @@ interface PlanesContextType {
   refreshPlanes: () => Promise<void>;
   agregarPlan: (plan: Planes) => Promise<void>;
   eliminarPlan: (id: string) => Promise<void>;
+  actualizarPlan: (plan: Planes) => Promise<void>
 }
 
 const PlanesContext = createContext<PlanesContextType | undefined>(undefined);
@@ -33,8 +34,14 @@ export const PlanesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     refreshPlanes();
   }, []);
 
+  const actualizarPlan = async (plan: Planes) => {
+    const update = await updatePlan(plan.id, plan)
+    setPlanes(prev => prev.map(p => p.id === update.id ? update : p))
+    await refreshPlanes() // << refresca siempre desde backend
+  }
+
   return (
-    <PlanesContext.Provider value={{ planes, refreshPlanes, agregarPlan, eliminarPlan }}>
+    <PlanesContext.Provider value={{ planes, refreshPlanes, agregarPlan, eliminarPlan, actualizarPlan }}>
       {children}
     </PlanesContext.Provider>
   );

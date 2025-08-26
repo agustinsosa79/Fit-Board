@@ -6,6 +6,8 @@ import { ClientesInactivos } from '../components/dashboard/ClientesInactivos';
 import { Spinner } from '@heroui/react';
 import { fetchClientes } from '../services/clientesService';
 import { ClientesNuevos } from '../components/dashboard/ClientesNuevos';
+import{ DashClients } from '../components/dashboard/DashClients';
+import ReporteClientes from '../components/dashboard/ReporteClientes';
 
 
 
@@ -46,6 +48,10 @@ useEffect(() => {
       <ClientesNuevos loading={loading} />
     </div>
   )}
+  <DashClients />
+  <div>
+    <ReporteClientes />
+  </div>
 </main>
 
   );

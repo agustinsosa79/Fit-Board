@@ -30,7 +30,7 @@ export const DesktopSidebar = () => {
         onLogout={handleConfirmLogout}
         designation={user?.admin_id ? "Administrador" : "Usuario"}
         >
-            <div className="p-4 bg-gradient-to-b from-black/10 via-gray-950/99 rounded-4xl border-b-4 border-gray-800 radius-none shadow-white/90 flex items-center justify-center !mb-10">
+            <div className="p-4 bg-gradient-to-b from-black/10 via-gray-950/99 rounded-4xl  shadow-white/90 flex items-center justify-center !mb-10">
         <Logo img={logo}>FitCore</Logo>
             </div>
             <div className="flex flex-col gap-6 !ml-5 ">

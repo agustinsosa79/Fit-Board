@@ -20,7 +20,7 @@ export const ClientForm = () => {
 
         console.log("Plan seleccionado:", form.plan_id);
 
-        const nuevoCliente: Cliente = { id: crypto.randomUUID(), ...form, estado: 'activo', plan_id: form.plan_id || null };
+        const nuevoCliente: Cliente = { id: crypto.randomUUID(), ...form, estado: 'activo', plan_id: form.plan_id || null, creado_en: "" };
         const errores: typeof error = {};
         if (!form.nombre) errores.nombre = "Nombre es obligatorio";
             else if (form.nombre.length < 3) errores.nombre = "El nombre debe tener al menos 3 caracteres";

@@ -9,7 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import type { Cliente } from "../../types/clientes";
 import InfoIcon from '@mui/icons-material/Info';
 import { usePlanes } from "../../context/planes-context/PlanesContext";
-const PER_PAGE = 8;
+const PER_PAGE = 6;
 
 export const ListaClientes: React.FC = () => {
   const { clientes = [], setClientes, loading } = useClients();
@@ -103,7 +103,7 @@ export const ListaClientes: React.FC = () => {
 
 
   return (
-    <div className=" w-200 !m-6 lg:!m-10 rounded-2xl bg-black/90 shadow-2xl shadow-black !p-20">
+    <div className=" w-200 !m-6 lg:!m-5 rounded-2xl bg-black/90 shadow-2xl  overflow-y-none shadow-black !p-20">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="concert-one-regular text-white text-2xl font-bold !mr-0 !mb-10 ">Lista de Clientes</h1>

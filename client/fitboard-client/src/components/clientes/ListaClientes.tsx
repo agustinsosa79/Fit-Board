@@ -151,7 +151,7 @@ export const ListaClientes: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 overflow-y ">
         {loading ? (
             Array.from({ length: PER_PAGE }).map((_, i) => (
-            <div key={i} className="p-4 rounded-lg bg-white/4 border border-white/8 animate-pulse h-28" />
+            <div key={i} className="p-4 rounded-lg bg-white/4 border border-white/8 animate-pulse !h-28" />
         ))
     ) : pageItems.length === 0 ? (
         <div className="!p-6 rounded-lg bg-white/4 border border-white/8 col-span-full text-gray-300">No hay clientes que coincidan.</div>
@@ -168,13 +168,13 @@ export const ListaClientes: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-3 text-gray-300 text-sm">
+                <div className="!mt-3 text-gray-300 !text-sm">
                   <div><span className="font-medium text-white mr-2">DNI: </span>{cliente.dni}</div>
-                  <div className="mt-1"><span className="font-medium text-white mr-2">Estado: </span>{cliente.estado}</div>
+                  <div className="!mt-1"><span className="font-medium text-white mr-2">Estado: </span>{cliente.estado}</div>
                 </div>
               </div>
 
-              <div className="flex flex-col items-end gap-2">
+              <div className="flex flex-col !items-end gap-2">
                 <div className="flex !gap-4 !mt-6  !pr-0">
                   <Button color="secondary" size="sm"  className="!p-2" onPress={() => openModal(cliente)} disabled={working}>
                     <InfoIcon style={{ fontSize: 15 }} />
@@ -195,7 +195,7 @@ export const ListaClientes: React.FC = () => {
   placement="center"
   scrollBehavior="inside"
 > 
-  <ModalContent className="!bg-gradient-to-br from-black/98 to-gray-800 !text-white rounded-2xl !p-10 !mx-auto !shadow-2xl">
+  <ModalContent className="!bg-gradient-to-br from-black/98 to-black/99 !text-white rounded-2xl !p-10 !mx-auto !shadow-2xl">
 
     {/* HEADER */}
     <ModalHeader className="!text-3xl !font-bold !border-b !border-white/10 !pb-4 !mb-4">

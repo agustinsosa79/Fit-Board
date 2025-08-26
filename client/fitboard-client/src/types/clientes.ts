@@ -8,6 +8,7 @@ interface Cliente {
     direccion: string;
     estado: string;
     plan_id: string | null;
+    creado_en: string;
 }
 
 

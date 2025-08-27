@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import ArticleIcon from '@mui/icons-material/Article';
 import SettingsIcon from '@mui/icons-material/Settings';
-import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import logo from "../../assets/logo-fit.png"; 
 import { useAuth } from "../../context/clientes-context/useAuth";
 import { useDisclosure, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@heroui/react";
@@ -47,11 +46,6 @@ export const DesktopSidebar = () => {
                 <Link to={"/planes"}>
                     <MenuItem icon={<ArticleIcon />}>
                         <span className="concert-one-regular text-lg">Planes</span>
-                    </MenuItem>
-                </Link>
-                <Link to={"/turnos"}>
-                    <MenuItem icon={<EditCalendarIcon />}>
-                        <span className="concert-one-regular text-lg">Turnos</span>
                     </MenuItem>
                 </Link>
                 <Link to={"/ajustes"}>

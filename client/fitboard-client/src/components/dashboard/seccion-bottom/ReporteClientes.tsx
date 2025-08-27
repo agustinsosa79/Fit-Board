@@ -11,20 +11,24 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { useClients } from "../../context/clientes-context/ClientesContext";
+import { useClients } from "../../../context/clientes-context/ClientesContext";
 import dayjs from "dayjs";
+import { useAuth } from "../../../context/clientes-context/useAuth";
+import { useEffect } from "react";
+import type { Cliente } from "../../../types/clientes";
+import { fetchClientes } from "../../../services/clientesService";
 
 // registrar módulos
 ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  ArcElement,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    ArcElement,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
 );
 ChartJS.defaults.font.family = "Roboto, sans-serif"
 ChartJS.defaults.font.weight = "normal"
@@ -32,22 +36,40 @@ ChartJS.defaults.font.size = 17
 ChartJS.defaults.color = "#fff";
 
 const ReportesClientes = () => {
-  const { clientes } = useClients();
+    const { clientes, setClientes } = useClients();
+    const { user, loading } = useAuth()
+
+
+
+    useEffect(() => {
+    if(loading) return
+    if(!user) return
+
+    const loadClientes = async () => {
+      try{
+        const data: Cliente[] =await fetchClientes()
+        setClientes(data)
+      } catch (error) {
+        console.error(error)
+      } 
+    }
+    loadClientes()
+  }, [user, loading, setClientes])
 
   // procesamos tus datos
-  const activos = clientes.filter(c => c.estado === "activo").length;
-  const inactivos = clientes.filter(c => c.estado === "inactivo").length;
-  const nuevos = clientes.filter(c => {
+    const activos = clientes.filter(c => c.estado === "activo").length;
+    const inactivos = clientes.filter(c => c.estado === "inactivo").length;
+    const nuevos = clientes.filter(c => {
     const fecha = new Date(c.creado_en);
     const hoy = new Date();
     return fecha.getMonth() === hoy.getMonth() && fecha.getFullYear() === hoy.getFullYear();
-  }).length;
+    }).length;
 
   // gráfico de barras
-  const dataBar = {
+    const dataBar = {
     labels: ["Activos", "Inactivos", "Nuevos"],
     datasets: [
-      {
+    {
         label: "Clientes",
         color: "#fff",
         data: [activos, inactivos, nuevos],

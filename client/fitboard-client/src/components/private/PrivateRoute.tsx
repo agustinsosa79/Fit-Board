@@ -8,6 +8,7 @@ export const PrivateRoute = () => {
     if (loading) {
         return <div>Cargando...</div>;
     }
+    
 
     return user ? <Outlet /> : <Navigate to="/login" />;
 };

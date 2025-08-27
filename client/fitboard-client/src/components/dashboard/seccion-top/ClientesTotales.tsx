@@ -1,14 +1,17 @@
 // ClientesTotales.tsx
-import { type Cliente } from "../../types/clientes";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
+import { useClients } from "../../../context/clientes-context/ClientesContext";
 
 interface ClientesTotalesProps {
-  clientes: Cliente[];
   loading: boolean;
 }
 
-export const ClientesTotales = ({ clientes, loading }: ClientesTotalesProps) => {
+export const ClientesTotales = ({ loading }: ClientesTotalesProps) => {
+  const {clientes} = useClients()
   if (loading) return <div>Cargando...</div>;
+
+
+  
 
   return(
 

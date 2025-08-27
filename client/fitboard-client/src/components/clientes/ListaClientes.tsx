@@ -1,7 +1,7 @@
 // src/components/clientes/ListaClientes.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import { useClients } from "../../context/clientes-context/ClientesContext";
-import { deleteCliente } from "../../services/clientesService";
+import { deleteCliente, fetchClientes } from "../../services/clientesService";
 import { Button, Alert,Modal, ModalContent, ModalHeader, ModalFooter, ModalBody, useDisclosure } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -9,21 +9,39 @@ import SearchIcon from "@mui/icons-material/Search";
 import type { Cliente } from "../../types/clientes";
 import InfoIcon from '@mui/icons-material/Info';
 import { usePlanes } from "../../context/planes-context/PlanesContext";
+import { useProvideAuth } from "../../context/clientes-context/useProvideAuth";
+
 const PER_PAGE = 6;
 
 export const ListaClientes: React.FC = () => {
+  const {user} = useProvideAuth()
   const { clientes = [], setClientes, loading } = useClients();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<"all" | "activo" | "inactivo">("all");
   const [page, setPage] = useState(1);
   const [working, setWorking] = useState(false);
   const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
-
   const [selectedClient, setSelectedClient] = useState<Cliente | null>(null);
   const [modal, setModal] = useState(false);
   const [modalEliminar, setModalEliminar] = useState(false);
   const [debounceQuery, setDebounceQuery] = useState("");
   const { planes } = usePlanes();
+
+
+  useEffect(() => {
+    if(loading) return
+    if(!user) return
+
+    const loadClientes = async () => {
+      try{
+        const data: Cliente[] =await fetchClientes()
+        setClientes(data)
+      } catch (error) {
+        console.error(error)
+      } 
+    }
+    loadClientes()
+  }, [user, loading, setClientes])
   
 
   const pushMessage = (text: string, type: "success" | "error" = "success", ttl = 4000) => {

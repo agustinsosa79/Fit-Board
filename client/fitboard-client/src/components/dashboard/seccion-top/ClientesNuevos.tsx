@@ -1,33 +1,20 @@
-import { useEffect, useState } from "react";
-import type { Cliente } from "../../types/clientes";
-import { fetchClientes } from "../../services/clientesService";
 import InsertChartOutlinedSharpIcon from '@mui/icons-material/InsertChartOutlinedSharp';
 import dayjs from "dayjs";
+import { useClients } from "../../../context/clientes-context/ClientesContext";
 
 export const ClientesNuevos = ({ loading }: { loading: boolean }) => {
-    const [nuevosClientes, setNuevosClientes] = useState<Cliente[]>([]);
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await fetchClientes();
-                if(data) {
+
+  const { clientes } = useClients()
+    
                     const mesActual = dayjs().month()
                     const añoActual = dayjs().year()
 
-                    const filtrados = data.filter(cliente => {
+                    const filtrados = clientes.filter(cliente => {
                         const fechaCreacion = dayjs(cliente.creado_en);
                         return fechaCreacion.month() === mesActual && fechaCreacion.year() === añoActual;
-                    });
+                    }).length ?? 0;
 
-                    setNuevosClientes(filtrados)
-                }
-            } catch (error) {
-                console.error('Error fetching clientes:', error);
-            }
-        };
-        fetchData();
-    }, []);
-
+                
 
     return (
             <div className="flex w-71 h-40 !items-center !gap-4 !p-6 bg-gray-900 rounded-2xl shadow-xl shadow-black hover:shadow-xl transition-shadow duration-300">
@@ -38,7 +25,7 @@ export const ClientesNuevos = ({ loading }: { loading: boolean }) => {
     {loading ? (
       <p className="text-gray-400 text-sm">Cargando...</p>
     ) : (
-      <p className="text-3xl font-bold text-white">{nuevosClientes.length}</p>
+      <p className="text-3xl font-bold text-white">{filtrados}</p>
     )}
     <h3 className="text-gray-400 text-sm">Clientes nuevos este mes</h3>
   </div>

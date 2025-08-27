@@ -7,7 +7,8 @@ interface PlanesContextType {
   refreshPlanes: () => Promise<void>;
   agregarPlan: (plan: Planes) => Promise<void>;
   eliminarPlan: (id: string) => Promise<void>;
-  actualizarPlan: (plan: Planes) => Promise<void>
+  actualizarPlan: (plan: Planes) => Promise<void>;
+  setPlanes: (planes: Planes[]) => void
 }
 
 const PlanesContext = createContext<PlanesContextType | undefined>(undefined);
@@ -37,11 +38,11 @@ export const PlanesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const actualizarPlan = async (plan: Planes) => {
     const update = await updatePlan(plan.id, plan)
     setPlanes(prev => prev.map(p => p.id === update.id ? update : p))
-    await refreshPlanes() // << refresca siempre desde backend
+    await refreshPlanes() 
   }
 
   return (
-    <PlanesContext.Provider value={{ planes, refreshPlanes, agregarPlan, eliminarPlan, actualizarPlan }}>
+    <PlanesContext.Provider value={{ planes, refreshPlanes, agregarPlan, eliminarPlan, actualizarPlan, setPlanes }}>
       {children}
     </PlanesContext.Provider>
   );

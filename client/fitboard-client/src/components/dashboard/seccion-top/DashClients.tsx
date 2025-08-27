@@ -1,5 +1,5 @@
 import { Modal, ModalContent, ModalFooter, ModalBody, Button } from "@heroui/react";
-import ListaClientes from "../clientes/ListaClientes";
+import ListaClientes from "../../clientes/ListaClientes";
 import { useState } from "react";
 
 export const DashClients = () => {

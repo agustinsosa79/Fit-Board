@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePlanes } from "../../context/planes-context/PlanesContext";
 import {
   Card,
@@ -17,10 +17,32 @@ import {
 import { Button } from "@heroui/react";
 import { useClients } from "../../context/clientes-context/ClientesContext";
 import type { Planes } from "../../types/planes";
+import { useProvideAuth } from "../../context/clientes-context/useProvideAuth";
+import { getPlanes } from "../../services/planesService";
 
 export const ListaPlanes: React.FC = () => {
-  const { clientes } = useClients();
-  const { planes, eliminarPlan, actualizarPlan } = usePlanes();
+  const { user, loading } = useProvideAuth()
+  const { clientes} = useClients();
+  const { planes, eliminarPlan, actualizarPlan, setPlanes } = usePlanes();
+
+  useEffect(() => {
+    if(loading) return
+    if(!user) return
+    
+    const loadingPlan = async () => {
+      try {
+        const data = await getPlanes()
+        setPlanes(data)
+      } catch (error) {
+        console.error(error);
+        
+      }
+    }
+
+    loadingPlan()
+  }, [user, loading, setPlanes])
+
+
   const [modal, setModal] = useState<{ isOpen: boolean; planId: string }>({
     isOpen: false,
     planId: "",
@@ -38,9 +60,44 @@ export const ListaPlanes: React.FC = () => {
 
   }as Planes)
 
+  const conPlan = (planId: string) => {
+    return clientes.filter(c => c.plan_id  === planId) 
+  }
+
   const handleDelete = (id: string) => {
-    eliminarPlan(id);
-    setModal({ isOpen: false, planId: "" });
+    try {
+      const asociados = conPlan(id)
+      console.log(asociados);
+      
+      
+    if (asociados.length > 0) {
+      // no permitir borrar y mostrar toast
+      setModal({ isOpen: false, planId: "" });
+      return addToast({
+        title: "No se puede eliminar el plan",
+        description: `Hay ${asociados.length} cliente(s) con este plan.`,
+        color: "warning",
+        size: "lg",
+        shouldShowTimeoutProgress: true,
+        variant: "solid",
+        radius: "md",
+      });
+    }
+      eliminarPlan(id);
+      setModal({ isOpen: false, planId: "" });
+      addToast({
+      title: "Plan eliminado",
+      description: "El plan ha sido eliminado correctamente.",
+      color: "success",
+      size: "lg",
+      shouldShowTimeoutProgress: true,
+      variant: "solid",
+      radius: "md",
+    });
+      
+    } catch (error) {
+      console.error(error);
+    }
   };
   const formatCurrency = (amount: number) =>{ 
     return new Intl.NumberFormat('es-AR', {
@@ -53,6 +110,7 @@ export const ListaPlanes: React.FC = () => {
 
   const handleEdit = (planId: string) => {
     const plan = planes.find(p => p.id === planId)
+
     if (!plan) {
       <p>Plan no encontrado</p>
       return
@@ -138,28 +196,7 @@ export const ListaPlanes: React.FC = () => {
             <Button
               color="danger"
               onPress={() => {
-                if (clientes.length > 0) {
-                  setModal({ isOpen: false, planId: "" });
-                  return addToast({
-                    title: "No se puede eliminar el plan",
-                    description: "El cliente tiene un plan activo.",
-                    color: "warning",
-                    size: "lg",
-                    shouldShowTimeoutProgress: true,
-                    variant: "solid",
-                    radius: "md",
-                    });
-                }
-                handleDelete(modal.planId);
-                addToast({
-                  title: "Plan eliminado",
-                  description: "El plan ha sido eliminado correctamente.",
-                  color: "success",
-                  size: "lg",
-                  shouldShowTimeoutProgress: true,
-                  variant: "solid",
-                  radius: "md",
-                });
+                handleDelete(modal.planId)
               }}
             >
               Eliminar
@@ -177,37 +214,52 @@ export const ListaPlanes: React.FC = () => {
       </Modal>
 
       <Modal
+      size="lg"
+      className="dark flex flex-col items-center justify-self-end  shadow-2xl border border-white/20 shadow-black" 
   closeButton={false}
   isOpen={edit.isOpen}
   onOpenChange={(open) => setEdit({ isOpen: open, planId: edit.planId })}
 >
-  <ModalContent>
-    <ModalHeader>
-      <h2>Edita el plan</h2>
+  <ModalContent className=" !flex !flex-col !gap-8 text-center">
+    <ModalHeader className="!text-center !p-8">
+      <h2 className="!text-center text-2xl concert-one-regular text-white">Edita el plan</h2>
     </ModalHeader>
-    <ModalBody>
+    <ModalBody className="flex flex-col !gap-15 w-100">
       <Input
+      className="border border-white/30 shadow-lg shadow-black animate-appearance-in rounded-xl"
+        label="Nombre:"
+        labelPlacement="outside"
+        variant="flat"
         type="text"
         value={form.nombre}
         onChange={(e) => setForm({ ...form, nombre: e.target.value })}
       />
       <Input
+      className="border border-white/30 shadow-lg shadow-black animate-appearance-in rounded-xl"
+        label="Descripción"
+        labelPlacement="outside"
         type="text"
         value={form.descripcion}
         onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
       />
       <Input
+      className="border border-white/30 shadow-lg shadow-black animate-appearance-in rounded-xl"
+        label="Duración"
+        labelPlacement="outside"
         type="text"
         value={form.duracion.toString()}
         onChange={(e) => setForm({ ...form, duracion: Number(e.target.value) })}
       />
-      <Input 
+      <Input
+      className="border border-white/30 shadow-lg shadow-black animate-appearance-in rounded-xl"
+        label="Precio"
+        labelPlacement="outside"
         type="text"
         value={form.precio.toString()}
         onChange={(e) => setForm({ ...form, precio: Number(e.target.value) })}
       />
     </ModalBody>
-    <ModalFooter>
+    <ModalFooter className=" !p-8">
       <Button
         onPress={async () => {
           await actualizarPlan(form)
@@ -221,6 +273,9 @@ export const ListaPlanes: React.FC = () => {
         }}
       >
         Guardar
+      </Button>
+      <Button onPress={() =>  setEdit({ isOpen: false, planId: '' })} >
+        Cancelar
       </Button>
     </ModalFooter>
   </ModalContent>

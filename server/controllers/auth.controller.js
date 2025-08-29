@@ -31,16 +31,58 @@ export const loginAdmin = async (req, res) => {
         }
 
         const token = jwt.sign({ admin_id: admin.id, email: admin.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const refreshToken = jwt.sign({ admin_id: admin.id, email: admin.email}, process.env.JWT_SECRET_REFRESHTOKEN, { expiresIn: '7d'})
+
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'Strict',
             maxAge: 6 * 60 * 60 * 1000 // 6 horas
         });
-        res.status(200).json({ message: 'Login exitoso', admin });
+        
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        })
+        const {password_hash, ...admin_data } = admin
+        res.status(200).json({ message: 'Login exitoso', admin_data });
     } catch (error) {
         console.error('Error al iniciar sesión:', error);
         res.status(500).json({ error: 'Error al iniciar sesión' });
+    }
+};
+
+
+export const refresh = (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) {
+        return res.status(401).json({ error: "No hay refresh token" });
+    }
+
+    try {
+        // verificamos el refresh
+        const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET_REFRESHTOKEN);
+
+        // generamos un nuevo access token válido por 1h
+        const newToken = jwt.sign(
+            { admin_id: decoded.admin_id, email: decoded.email },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+
+        // lo mandamos como cookie nueva
+        res.cookie("token", newToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "Strict",
+            maxAge: 60 * 60 * 1000 // 1 hora
+        });
+
+        return res.status(200).json({ message: "Token renovado" });
+    } catch (error) {
+        return res.status(403).json({ error: "Refresh token inválido o expirado" });
     }
 };
 
@@ -53,6 +95,12 @@ export const logoutAdmin = async (req, res) => {
             sameSite: 'Strict',
             maxAge: 6 * 60 * 60 * 1000 // 6 horas
         });
+        res.clearCookie('refreshToken', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Strict',
+            maxAge: 7 * 24 * 60 *60 * 1000
+        })
         res.status(200).json({ message: 'Logout exitoso' });
     } catch (err) {
         res.status(500).json({ error: 'Error al cerrar sesión' });

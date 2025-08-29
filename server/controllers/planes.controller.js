@@ -45,7 +45,7 @@ export const deleteExistingPlan = async (req, res) => {
     const { id } = req.params;
     const { admin_id } = req.user;
     try {
-        const clientes = await getPlanByClientes(id);
+        const clientes = await getPlanByClientes(id, admin_id);
         if (clientes.length > 0) {
             console.log('No se puede eliminar el plan porque tiene clientes asociados');
             return res.status(400).json({ error: 'No se puede eliminar el plan porque tiene clientes asociados' });

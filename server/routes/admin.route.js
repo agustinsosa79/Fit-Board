@@ -1,4 +1,3 @@
-import { authenticateToken } from "../middlewares/auth.middleware.js";
 import { deleteAdminById, getAdminById, getAllAdmins } from "../controllers/admin.controller.js";
 import { Router } from "express";
 

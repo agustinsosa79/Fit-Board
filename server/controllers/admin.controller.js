@@ -1,6 +1,7 @@
 import { deleteAdmin, allAdmin, AdminById } from "../models/admin.js";
 
 
+
 export const deleteAdminById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -40,3 +41,7 @@ export const getAllAdmins = async (req, res) => {
         res.status(500).json({ error: 'Error al obtener todos los admins' });
     }
 };
+
+
+
+

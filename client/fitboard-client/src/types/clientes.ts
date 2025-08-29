@@ -9,6 +9,7 @@ interface Cliente {
     estado: string;
     plan_id: string | null;
     creado_en: string;
+    vence: string | null
 }
 
 

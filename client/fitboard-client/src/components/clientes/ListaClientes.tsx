@@ -10,6 +10,7 @@ import type { Cliente } from "../../types/clientes";
 import InfoIcon from '@mui/icons-material/Info';
 import { usePlanes } from "../../context/planes-context/PlanesContext";
 import { useProvideAuth } from "../../context/clientes-context/useProvideAuth";
+import { useFechaVencimiento } from "./vencimiento/ClienteVence";
 
 const PER_PAGE = 6;
 
@@ -26,6 +27,7 @@ export const ListaClientes: React.FC = () => {
   const [modalEliminar, setModalEliminar] = useState(false);
   const [debounceQuery, setDebounceQuery] = useState("");
   const { planes } = usePlanes();
+  const clientesConVencimiento = useFechaVencimiento()
 
 
   useEffect(() => {
@@ -62,16 +64,17 @@ export const ListaClientes: React.FC = () => {
   // Filtrado y búsqueda
   const filtered = useMemo(() => {
     const q = debounceQuery.trim().toLowerCase();
-    return clientes.filter((c) => {
+    return clientesConVencimiento.filter((c) => {
       if (filter !== "all" && c.estado !== filter) return false;
       if (!q) return true;
       return (
         c.nombre.toLowerCase().includes(q) ||
         (c.email && c.email.toLowerCase().includes(q)) ||
-        (c.dni && String(c.dni).includes(q))
+        (c.dni && String(c.dni).includes(q)) ||
+        (c.vence && c.vence.toLowerCase())
       );
     });
-  }, [clientes, debounceQuery, filter]);
+  }, [clientesConVencimiento, debounceQuery, filter]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
   const pageItems = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -83,7 +86,7 @@ export const ListaClientes: React.FC = () => {
 
   // Eliminar un cliente (optimista y seguro)
   const handleDeleteOne = async (id: string) => {
-    const cliente = clientes.find(c => c.id === id);
+    const cliente = clientesConVencimiento.find((c) => c.id === id);
 
     const backup = [...clientes];
     try {
@@ -105,7 +108,9 @@ export const ListaClientes: React.FC = () => {
   };
 
    const openModal = (cliente: Cliente) =>{
-    setSelectedClient(cliente)
+      const clienteConVencimiento = clientesConVencimiento.find(c => c.id === cliente.id)
+      if(!clienteConVencimiento) return
+    setSelectedClient(clienteConVencimiento)
     setModal(true)
    } 
 
@@ -179,7 +184,7 @@ export const ListaClientes: React.FC = () => {
               <div>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-white/8 flex items-center justify-center text-white font-semibold uppercase">
-                    {cliente.nombre?.slice(0, 1) ?? "?"}
+                    {cliente?.nombre.slice(0, 1) ?? "?"}
                   </div>
                   <div>
                     <div className="text-white font-semibold">{cliente.nombre}</div>
@@ -229,7 +234,7 @@ export const ListaClientes: React.FC = () => {
           Datos personales
         </h4>
 
-        <div className="!grid !grid-cols-2 !gap-y-3 !gap-x-6 !text-sm bg-black/90 !p-10 rounded-2xl !mb-8 shadow-xl shadow-black !m-3">
+        <div className="!grid !grid-cols-2 !gap-y-3 !gap-x-6 !text-sm bg-black/70 !p-10 rounded-2xl !mb-8 shadow-xl shadow-black !m-3">
           <p className="bg-gray-700/10 border-b border-white/30 !p-3 rounded-full shadow-xl shadow-black"><span className="!font-semibold text-white">Email:</span> {selectedClient?.email}</p>
           <p className="bg-gray-700/10 border-b border-white/30 !p-3 rounded-full shadow-xl shadow-black"><span className="!font-semibold text-white">Teléfono:</span> {selectedClient?.telefono}</p>
           {selectedClient?.direccion && (
@@ -239,7 +244,7 @@ export const ListaClientes: React.FC = () => {
             <p className="bg-gray-700/10 border-b border-white/30 !p-3 rounded-full shadow-xl shadow-black"><span className="!font-semibold text-white">DNI:</span> {selectedClient?.dni}</p>
           )}
           <p className="bg-gray-700/10 border-b border-green-400/30 !p-3 rounded-full shadow-xl shadow-black">
-            <span className="!font-semibold text-white">Plan:</span>{" "}
+            <span className="!font-bold text-green-400">Plan:</span>{" "}
             {selectedClient?.plan_id
               ? (() => {
                   const plan = planes.find(p => p.id === selectedClient.plan_id);
@@ -248,6 +253,10 @@ export const ListaClientes: React.FC = () => {
                     : "Plan no encontrado";
                 })()
               : "Sin plan asignado"}
+          </p>
+          <p className="bg-gray-700/10 border-b border-red-900/80 !p-3 rounded-full shadow-xl shadow-black">
+            <span className="!font-bold text-red-500">Vencimiento: </span>
+              {selectedClient?.vence}
           </p>
         </div>
       </section>

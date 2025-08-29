@@ -29,7 +29,7 @@ export const useProvideAuth = (): AuthContextType => {
       });
       if (!res.ok) throw new Error('Credenciales inválidas');
       const data = await res.json();
-      setUser(data.admin); 
+      setUser(data.admin_data); 
     } catch (error) {
       setUser(undefined);
       throw error;
@@ -48,7 +48,7 @@ export const useProvideAuth = (): AuthContextType => {
     }
   };
 
-  const isAuthenticated = () => user !== null;
+  const isAuthenticated = () => !!user;
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -58,13 +58,15 @@ export const useProvideAuth = (): AuthContextType => {
         if (res.ok) {
           const data = await res.json();
           setUser(data);
-        } else {
+        } else if (res.status === 401) {
           setUser(undefined);
-          console.error('Error fetching user data');
+        } else {
+          console.error("Error inesperado:", res.status);
+          setUser(undefined)
         }
-      } catch {
+      } catch (err) {
         setUser(undefined);
-        console.error('Error fetching user data');
+        console.error('Error fetching user data', err);
       } finally {
         setLoading(false);
       }

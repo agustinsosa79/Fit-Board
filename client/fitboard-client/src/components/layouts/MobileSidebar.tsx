@@ -12,8 +12,6 @@ import {
   HomeIcon,
   UsersIcon,
   ClipboardDocumentListIcon,
-  CalendarDaysIcon,
-  Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate, useLocation } from "react-router";
 import logo from "../../assets/logo-fit.png"; // Asegúrate de que la ruta sea correcta
@@ -42,8 +40,6 @@ export default function MobileSidebar({ isOpen, setIsOpen }: Props) {
     { label: "Dashboard", path: "/", Icon: HomeIcon },
     { label: "Clientes", path: "/clientes", Icon: UsersIcon },
     { label: "Planes", path: "/planes", Icon: ClipboardDocumentListIcon },
-    { label: "Turnos", path: "/turnos", Icon: CalendarDaysIcon },
-    { label: "Ajustes", path: "/ajustes", Icon: Cog6ToothIcon },
   ];
 
   useEffect(() => {

@@ -1,13 +1,14 @@
 import type { Cliente } from '../../types/clientes';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext,useContext, useEffect, useState } from 'react';
 import { fetchClientes } from '../../services/clientesService';
+import { useAuth } from './useAuth';
 
 
 interface ClientContextType  {
   clientes:  Cliente[],
   setClientes: (clientes: Cliente[]) => void,
   agregarCliente: (cliente: Cliente) => void,
-  loading: boolean
+  loading: boolean,
 };
 
 
@@ -24,36 +25,36 @@ const ClientesContext = createContext<ClientContextType | undefined>(undefined);
 }
 
 export const ClientesProvider = ({ children }: { children: React.ReactNode }) => {
+    const {user, loading} = useAuth()
     const [clientes, setClientes] = useState<Cliente[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
+
+    
 
     useEffect(() => {
+
         const getClientes = async () => {
-            setLoading(true);
+            if (loading) return
+            if (!user) return
             try {
                     const data = await fetchClientes();
                     setClientes(data);
+                    
             } catch (error) {
                 console.error("Error fetching clientes:", error);
-            } finally {
-                setLoading(false);
-            }
+            } 
             }
         getClientes();
-
-    }, [])
+    }, [loading, user])
 
     const agregarCliente = (cliente: Cliente) => {
         setClientes((prevClientes) => [...prevClientes, cliente]);
     }
-
-
     return (
         <ClientesContext.Provider value={{
             clientes,
             setClientes,
             agregarCliente,
-            loading
+            loading,
         }}>
             {children}
         </ClientesContext.Provider>

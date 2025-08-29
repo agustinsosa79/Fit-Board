@@ -28,14 +28,14 @@ useEffect(() => {
 
   return (
     <main className="min-h-screen bg-gray-950 text-white !p-8">
-  <h1 className="!text-3xl !ml-15 font-bold !mb-8 concert-one-regular">Dashboard de Principal</h1>
+  <h1 className="!text-3xl !ml-15 font-bold !mb-8 concert-one-regular">DASHBOARD</h1>
 
   {loading ? (
     <div className="flex !justify-center !items-center !h-40">
       <Spinner size="lg" />
     </div>
   ) : (
-    <div className="grid !ml-15 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 !gap-6">
+    <div className="grid !ml-15 grid-cols-1 md:grid-cols-2 lg:grid-cols-4  !gap-6">
       <ClientesTotales  loading={loading} />
       <ClientesActivos />
       <ClientesInactivos />

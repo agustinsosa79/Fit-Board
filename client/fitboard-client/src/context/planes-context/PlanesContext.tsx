@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getPlanes, createPlan, deletePlan, updatePlan} from "../../services/planesService";
 import type { Planes } from "../../types/planes";
+import { useAuth } from "../clientes-context/useAuth";
 
 interface PlanesContextType {
   planes: Planes[];
@@ -15,10 +16,11 @@ const PlanesContext = createContext<PlanesContextType | undefined>(undefined);
 
 export const PlanesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [planes, setPlanes] = useState<Planes[]>([]);
+  const {user, loading} = useAuth()
 
   const refreshPlanes = async () => {
     const data = await getPlanes();
-    setPlanes(data);
+    setPlanes(Array.isArray(data) ? data : []);
   };
 
   const agregarPlan = async (plan: Planes) => {
@@ -32,8 +34,10 @@ export const PlanesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   };
 
   useEffect(() => {
+    if (loading) return
+    if(!user) return
     refreshPlanes();
-  }, []);
+  }, [user, loading]);
 
   const actualizarPlan = async (plan: Planes) => {
     const update = await updatePlan(plan.id, plan)

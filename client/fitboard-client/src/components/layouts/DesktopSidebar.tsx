@@ -3,7 +3,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "react-router-dom";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import ArticleIcon from '@mui/icons-material/Article';
-import SettingsIcon from '@mui/icons-material/Settings';
 import logo from "../../assets/logo-fit.png"; 
 import { useAuth } from "../../context/clientes-context/useAuth";
 import { useDisclosure, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@heroui/react";
@@ -17,9 +16,12 @@ export const DesktopSidebar = () => {
         onOpenChange(); 
     };
 
+    if (!user) return
+
+
     return (
     <>
-        <div className="bg-black h-screen hidden lg:flex flex-col fixed top-0 left-0 z-50 w-[270px] !shadow-xl  !shadow-black">
+        <div className="bg-black h-screen hidden lg:flex flex-col fixed top- left-0 z-50 w-[270px] !shadow-xl  !shadow-black">
         <Sidebar
         width={"270px"}
         mode="dark"
@@ -32,27 +34,16 @@ export const DesktopSidebar = () => {
             <div className="p-4 bg-gradient-to-b from-black/10 via-gray-950/99 rounded-4xl  shadow-white/90 flex items-center justify-center !mb-10">
         <Logo img={logo}>FitCore</Logo>
             </div>
-            <div className="flex flex-col gap-6 !ml-5 ">
-                <Link to={"/"} >
-            <MenuItem icon={<HomeIcon />} >
+            <div className="flex flex-col gap-6 !mb-90 !ml-5 ">
+            <MenuItem icon={<HomeIcon />} component={Link} link="/" >
                 <span className="concert-one-regular text-lg">Inicio</span>
             </MenuItem>
-                </Link>
-                <Link to={"/clientes"}>
-                    <MenuItem icon={<PersonSearchIcon />}>
+                    <MenuItem icon={<PersonSearchIcon />} component={Link} link="/clientes">
                         <span className="concert-one-regular text-lg">Clientes</span>
                     </MenuItem>
-                </Link>
-                <Link to={"/planes"}>
-                    <MenuItem icon={<ArticleIcon />}>
+                    <MenuItem icon={<ArticleIcon />} component={Link} link="/planes">
                         <span className="concert-one-regular text-lg">Planes</span>
                     </MenuItem>
-                </Link>
-                <Link to={"/ajustes"}>
-                    <MenuItem icon={<SettingsIcon />}>
-                        <span className="concert-one-regular text-lg">Reportes</span>
-                    </MenuItem>
-                </Link>
             </div>
         </Sidebar>
                 <Button variant="shadow" color="secondary" onClick={handleConfirmLogout} className="flex text-white font-bold  top-0 left-5 m-1 w-56 items-center justify-center">Cerrar sesión</Button>

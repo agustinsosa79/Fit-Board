@@ -110,6 +110,7 @@ export const ListaPlanes: React.FC = () => {
 
   const handleEdit = (planId: string) => {
     const plan = planes.find(p => p.id === planId)
+     
 
     if (!plan) {
       <p>Plan no encontrado</p>

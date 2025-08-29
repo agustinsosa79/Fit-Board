@@ -8,7 +8,6 @@ import { Dashboard } from './pages/Dashboard'
 import { Clientes } from './pages/Clientes'
 import { Planes } from './pages/Planes'
 import {Layout} from './components/layouts/Layout'
-import { Ajustes } from './components/ajustes/Ajustes'
 import { ClientesProvider } from './context/clientes-context/ClientesContext'
 import { PlanesProvider } from './context/planes-context/PlanesContext'
 
@@ -31,7 +30,6 @@ function App() {
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/clientes' element={<Clientes />} />
                     <Route path='/planes' element={<Planes />} />
-                    <Route path='/ajustes' element={<Ajustes />} />
                   </Route>
               </Route>
             </Routes>

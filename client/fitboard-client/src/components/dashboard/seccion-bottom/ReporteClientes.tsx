@@ -39,12 +39,11 @@ const ReportesClientes = () => {
     const { clientes, setClientes } = useClients();
     const { user, loading } = useAuth()
 
-
+    
 
     useEffect(() => {
     if(loading) return
     if(!user) return
-
     const loadClientes = async () => {
       try{
         const data: Cliente[] =await fetchClientes()
@@ -57,13 +56,13 @@ const ReportesClientes = () => {
   }, [user, loading, setClientes])
 
   // procesamos tus datos
-    const activos = clientes.filter(c => c.estado === "activo").length;
-    const inactivos = clientes.filter(c => c.estado === "inactivo").length;
-    const nuevos = clientes.filter(c => {
-    const fecha = new Date(c.creado_en);
+    const activos = Array.isArray(clientes) ? clientes.filter(c => c.estado === "activo").length : 0
+    const inactivos = Array.isArray(clientes) ? clientes.filter(c => c.estado === "inactivo").length : 0
+    const nuevos = Array.isArray(clientes) ? clientes.filter(c => {
+    const fecha = new Date(c.creado_en)
     const hoy = new Date();
     return fecha.getMonth() === hoy.getMonth() && fecha.getFullYear() === hoy.getFullYear();
-    }).length;
+    }).length: 0
 
   // gráfico de barras
     const dataBar = {

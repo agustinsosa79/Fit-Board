@@ -18,10 +18,12 @@ export const useProvideAuth = (): AuthContextType => {
   const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState<boolean>(true);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:3000/api/auth/login', {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -41,7 +43,7 @@ export const useProvideAuth = (): AuthContextType => {
   const logout = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:3000/api/auth/logout', { method: 'POST', credentials: 'include' });
+      const res = await fetch(`${API_URL}/api/auth/logout`, { method: 'POST', credentials: 'include' });
       if (res.ok) setUser(undefined);
     } finally {
       setLoading(false);
@@ -54,7 +56,7 @@ export const useProvideAuth = (): AuthContextType => {
     const fetchUser = async () => {
       setLoading(true);
       try {
-        const res = await fetch('http://localhost:3000/api/auth/me', { credentials: 'include' });
+        const res = await fetch(`${API_URL}/api/auth/me`, { credentials: 'include' });
         if (res.ok) {
           const data = await res.json();
           setUser(data);
@@ -72,7 +74,7 @@ export const useProvideAuth = (): AuthContextType => {
       }
     };
     fetchUser();
-  }, []);
+  }, [API_URL]);
 
   return { user , login, logout, isAuthenticated, loading };
 };

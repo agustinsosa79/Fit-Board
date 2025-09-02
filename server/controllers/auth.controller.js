@@ -22,10 +22,14 @@ export const loginAdmin = async (req, res) => {
 
     try {
         const admin = await getAdminByEmail(email);
+
+        
         if (!admin) {
             return res.status(404).json({ error: 'Admin no encontrado' });
         }
         const isValid = await bcrypt.compare(password, admin.password_hash);
+        console.log(isValid);
+        
         if (!isValid) {
             return res.status(401).json({ error: 'Contraseña incorrecta' });
         }
@@ -36,14 +40,14 @@ export const loginAdmin = async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'Strict',
+            sameSite: 'None',
             maxAge: 6 * 60 * 60 * 1000 // 6 horas
         });
         
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'Strict',
+            sameSite: 'None',
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
         const {password_hash, ...admin_data } = admin

@@ -1,7 +1,8 @@
 import type { Planes } from "../types/planes";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const getPlanes = async (): Promise<Planes[]> => {
-  const response = await fetch("http://localhost:3000/api/planes", {
+  const response = await fetch(`${API_URL}/api/planes`, {
     credentials: "include"
   });
   if (!response.ok) throw new Error("Error al obtener los planes");
@@ -10,7 +11,7 @@ export const getPlanes = async (): Promise<Planes[]> => {
 
 
 export const createPlan = async (plan: Planes): Promise<Planes> => {
-  const response = await fetch("http://localhost:3000/api/planes", {
+  const response = await fetch(`${API_URL}/api/planes`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -23,7 +24,7 @@ export const createPlan = async (plan: Planes): Promise<Planes> => {
 };
 
 export const deletePlan = async (id: string): Promise<void> => {
-  const response = await fetch(`http://localhost:3000/api/planes/${id}`, {
+  const response = await fetch(`${API_URL}/api/planes/${id}`, {
     method: "DELETE",
     credentials: "include"
   });
@@ -31,7 +32,7 @@ export const deletePlan = async (id: string): Promise<void> => {
 };
 
 export const updatePlan = async (id: string, plan: Planes): Promise<Planes> => {
-  const response = await fetch(`http://localhost:3000/api/planes/${id}`, {
+  const response = await fetch(`${API_URL}/api/planes/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"

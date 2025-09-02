@@ -1,8 +1,12 @@
 import { type Cliente } from "../types/clientes"
 
+
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 export const fetchClientes = async (): Promise<Cliente[]> => {
     try {
-        const response = await fetch("http://localhost:3000/api/clientes", {
+        const response = await fetch(`${API_URL}/api/clientes`, {
             credentials: "include"
         });
         const data = await response.json();
@@ -17,7 +21,7 @@ export const fetchClientes = async (): Promise<Cliente[]> => {
 
 export const createCliente = async (cliente: Cliente): Promise<Cliente> => {
     try {
-        const response = await fetch("http://localhost:3000/api/clientes", {
+        const response = await fetch(`${API_URL}/api/clientes`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -35,7 +39,7 @@ export const createCliente = async (cliente: Cliente): Promise<Cliente> => {
 
 export const deleteCliente = async (id: string)  => {
   try {
-    const res = await fetch(`http://localhost:3000/api/clientes/${id}`, {
+    const res = await fetch(`${API_URL}/api/clientes/${id}`, {
       method: "DELETE",
       credentials: "include"
     });
@@ -55,7 +59,7 @@ export const deleteCliente = async (id: string)  => {
 
 export const updateCliente = async (id: string, cliente: Cliente): Promise<Cliente> => {
   try {
-    const response = await fetch(`http://localhost:3000/api/clientes/${id}`, {
+    const response = await fetch(`${API_URL}/api/clientes/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"

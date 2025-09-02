@@ -87,7 +87,7 @@ export const PlanesForm = () => {
 
 
     return (
-        <Form onSubmit={handleSubmit} className="!w-100 !flex !flex-column !gap-20 !p-10 !m-15">
+        <Form onSubmit={handleSubmit} className="md:!w-100 !max-w-full !p-4 !flex !flex-column h-vw !gap-10 md:!gap-20 md:!p-10 !m-5 md:!m-15">
                 <Input
                 radius='sm'
                 name='nombre'
@@ -102,7 +102,7 @@ export const PlanesForm = () => {
                 size='md'
                 //@ts-expect-error-ignore
                 color='undefined'
-                className=' caret-blue-400 !font-bold'
+                className="caret-blue-400 !p-3 w-70 md:!w-80 md:!p-0  !font-bold"
                 
                 />
                 <Input
@@ -120,7 +120,7 @@ export const PlanesForm = () => {
                     size="md"
                     //@ts-expect-error-ignore
                     color="undefined"
-                    className="caret-blue-400 !font-bold"
+                    className="caret-blue-400 !p-3 w-70 md:!w-80 md:!p-0  !font-bold"
                 />
                     <Input
                     radius="sm"
@@ -150,7 +150,7 @@ export const PlanesForm = () => {
                     //@ts-expect-error-ignore
                     color="undefined"
                     errorMessage={errors.precio}
-                    className="caret-blue-400 !font-bold text-bold"
+                    className="caret-blue-400 !p-3 w-70 md:!w-80 md:!p-0  !font-bold"
                     />
                 <Input
                     radius="sm"
@@ -167,10 +167,10 @@ export const PlanesForm = () => {
                     size="md"
                     //@ts-expect-error-ignore
                     color="undefined"
-                    className="caret-blue-400 !font-bold"
+                    className="caret-blue-400 !p-3 w-70 md:!w-80 md:!p-0  !font-bold"
                     errorMessage={errors.duracion}
                 />
-            <Button color="success" variant="shadow" size="md" radius="md" type="submit" className="!text-white !font-bold !p-0 w-80">Guardar</Button>
+            <Button color="success"  variant="solid" size="md" radius="md" type="submit" className="!text-white !font-bold !p-2 md:!p-0 w-70  md:w-80">Guardar</Button>
         </Form>
     );
 };

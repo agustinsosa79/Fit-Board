@@ -35,7 +35,7 @@ useEffect(() => {
       <Spinner size="lg" />
     </div>
   ) : (
-    <div className=" !grid md:!ml-15 !items-start w-full grid-cols-2 md:!grid-cols-4 lg:grid-cols-1  !gap-10 !m-0">
+    <div className=" !grid md:!ml-15  w-full grid-cols-2 md:!grid-cols-4  !gap-10 !ml-3">
       <ClientesTotales  loading={loading} />
       <ClientesActivos />
       <ClientesInactivos />

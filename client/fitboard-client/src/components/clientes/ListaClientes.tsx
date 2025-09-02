@@ -125,19 +125,19 @@ export const ListaClientes: React.FC = () => {
 
 
   return (
-    <div className=" w-80% md:w-200 !p-3  !m-6 lg:!m-5 rounded-2xl bg-black/90 shadow-2xl  overflow-y-hidden shadow-black md:!p-20 ">
+    <div className=" w-80% md:w-200 !p-3  !m-2 lg:!m-5 rounded-2xl bg-black/90 shadow-2xl  overflow-y-hidden shadow-black md:!p-20 ">
       <div className="flex md:items-end md:justify-between mb-6">
           <h1 className="concert-one-regular text-white text-lg md:text-2xl font-bold !mr-0 !mb-3 ">Lista de Clientes</h1>
-            <p className=" hidden md:!flex md:!mt-18 gap-2 flex-col md:flex-row md:w-80 !bg-gray-600/20 !border-gray-600/30 !justify-center !p-2 !mb-2 !rounded-lg border text-white">
+            <p className=" hidden md:!flex md:!mt-18 gap-0 flex-col md:flex-row md:w-80 !bg-gray-600/20 !border-gray-600/30 !justify-center !p-2 !mb-2 !rounded-lg border text-white">
             <span>Total: {clientes.length}</span>
-            <span className="md:!pl-2  hidden md:flex">Mostrando: {filtered.length}</span>
+            <span className="md:!pl-1 text-end !ml-10  hidden md:flex">Mostrando: {filtered.length}</span>
             </p>
 
-        <div className="md:flex items-center !grid-cols-1 md:grid-row-1 gap-3 !mt-17 !p-2 !ml-2">
+        <div className="md:flex items-center !grid-cols-1 md:grid-row-1 gap-3 !mt-17 !pb-2 !ml-5">
           <select
             value={filter}
             onChange={(e) => { setFilter(e.target.value as "all" | "activo" | "inactivo"); setPage(1); }}
-            className="!bg-white/5 text-white !px-9 !py-2 rounded-md border border-gray-600/30 "
+            className="!bg-white/5 text-white !ml-1 !px-19 !py-2 rounded-md border border-gray-600/30 "
           >
             <option className="!bg-black/90" value="all">Todos</option>
             <option className="bg-black/90" value="activo">Activos</option>
@@ -167,7 +167,7 @@ export const ListaClientes: React.FC = () => {
 
 
 
-      <ScrollShadow hideScrollBar className="grid grid-cols-1 md:grid-cols-2 gap-5 md:w-full md:h-100 w-[250px] h-[280px] ">
+      <ScrollShadow hideScrollBar className="grid grid-cols-1  !justify-center md:grid-cols-2 gap-5 md:w-full md:h-100 w-[250px] h-[280px] ">
         {loading ? (
             Array.from({ length: PER_PAGE }).map((_, i) => (
             <div key={i} className="p-4 rounded-lg bg-white/4 border border-white/8 animate-pulse !h-28" />
@@ -176,7 +176,7 @@ export const ListaClientes: React.FC = () => {
         <div className="!p-6 rounded-lg bg-white/4 border border-white/8 col-span-full text-gray-300">No hay clientes que coincidan.</div>
     ) : (
         pageItems.map((cliente) => (
-            <div key={cliente.id} className="md:!p-5 md:!mt-2 !p-2 rounded-lg bg-white/4 border border-white/8 flex justify-between items-start gap-4">
+            <div key={cliente.id} className="md:!p-5 md:!mt-2 !p-2 max-w-full rounded-lg bg-white/4 border border-white/8 flex justify-center md:justify-between items-start gap-4">
               <div>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-white/8 flex items-center justify-center text-white font-semibold uppercase">

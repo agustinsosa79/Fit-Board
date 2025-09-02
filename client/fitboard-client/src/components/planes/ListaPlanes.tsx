@@ -137,10 +137,10 @@ export const ListaPlanes: React.FC = () => {
         <p className="text-gray-400 text-center">No hay planes disponibles</p>
       )}
 
-      <ScrollShadow hideScrollBar className="w-[750px] h-[718px]">
-        <div className="!grid grid-cols-1 sm:grid-cols-2 !lg:grid-cols-3 !gap-0 !p-0">
+      <ScrollShadow hideScrollBar className="md:w-[750px] md:h-[718px] w-[250px] h-[300px]">
+        <div className="!grid grid-cols-1 sm:grid-cols-2 !lg:grid-cols-3 !gap-10 !p-0">
           {planes.map(({ id, precio, nombre, duracion, descripcion }) => (
-            <Card key={id} shadow="sm" className=" text-white  !p-5 !ml-10 !mt-2 rounded-lg bg-white/4 border border-white/8">
+            <Card key={id} shadow="sm" className=" text-white !p-3  md:!p-5 md:!m-0 !mt-2 rounded-lg bg-white/4 border border-white/8">
               <CardHeader className="!flex !flex-col !items-start">
                 <h2 className="!text-xl !font-bold !mt-3 !mb-4">{nombre}</h2>
                 <div className="bg-black/20 !border !border-white/10 rounded-2xl w-full !p-2">
@@ -157,10 +157,11 @@ export const ListaPlanes: React.FC = () => {
               <CardFooter className="flex justify-between items-center">
 
                 <span className="text-lg font-bold bg-black/20 !border rounded-2xl  !border-white/10 !m-1 !p-2">Precio: {formatCurrency(precio)}</span>
+                <div className="md:flex md:flex-row flex flex-col !items-center">
                 <Button
                 onPress={() => handleEdit(id)}
                 size="sm"
-
+                
                 className="!p-3 !ml-4 "
                 >
                   Editar Plan
@@ -171,9 +172,10 @@ export const ListaPlanes: React.FC = () => {
                   radius="sm"
                   size="sm"
                   className="!p-3 !m-1"
-                >
+                  >
                   Eliminar Plan
                 </Button>
+                  </div>
               </CardFooter>
             </Card>
           ))}

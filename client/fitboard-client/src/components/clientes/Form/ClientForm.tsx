@@ -56,8 +56,8 @@ export const ClientForm = () => {
     };
 
     return (
-        <Form validationErrors={error}  onSubmit={handleSubmit} className='lg:bg-black/90 w-screen !text-white  rounded-2xl shadow-2xl shadow-black md:w-140 h-auto !flex !flex-col !gap-9 !m-5 !ml-7 !p-20'>
-            <h1 className='!major-mono-display-regular text-white !ml-25 !mb-3 concert-one-regular text-3xl font-bold'>Crear Cliente</h1>
+        <Form validationErrors={error}  onSubmit={handleSubmit} className='!bg-black/70 md:!bg-black/90 !mb-10 !p-10  w-screen !text-white  md:rounded-2xl shadow-2xl shadow-black max-w-full md:w-140 h-auto !flex !flex-col !gap-9 md:!m-5 md:!ml-30 md:!p-20'>
+            <h1 className='!major-mono-display-regular text-white  md:!ml-25 !mb-3 concert-one-regular text-3xl font-bold'>Crear Cliente</h1>
             <Input
                 name='nombre'
                 isRequired

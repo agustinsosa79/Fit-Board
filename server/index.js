@@ -9,13 +9,26 @@ import clientesRouter from './routes/clientes.route.js';
 import planesRouter from './routes/planes.route.js';
 import adminRouter from './routes/admin.route.js';
 
+const allowedOrigins = [
+  'http://localhost:5173',                 // local
+  'https://fit-board-client.vercel.app',   // producción original
+  'https://fit-board-wqjq.vercel.app'     // tu frontend actual en Vercel
+];
+
 
 
 const app = express();
 app.use(cookieParser());
 
 app.use(cors({
-    origin: 'https://fit-board-client.vercel.app',
+    origin: function(origin, callback){
+    if (!origin) return callback(null, true); // para requests desde Postman o curl
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));

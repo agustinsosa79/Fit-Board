@@ -12,7 +12,10 @@ import adminRouter from './routes/admin.route.js';
 const allowedOrigins = [
   'http://localhost:5173',                 // local
   'https://fit-board-client.vercel.app',   // producción original
-  'https://fit-board-wqjq.vercel.app'     // tu frontend actual en Vercel
+  'https://fit-board-wqjq.vercel.app',     // tu frontend actual en Vercel
+  'https://fit-board-wqjq-h40q6n43o-agustinsosa79s-projects.vercel.app',
+  'https://fit-board-wqjq-git-master-agustinsosa79s-projects.vercel.app/login',
+  'https://fit-board-wqjq-h40q6n43o-agustinsosa79s-projects.vercel.app/login'
 ];
 
 

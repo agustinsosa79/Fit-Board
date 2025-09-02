@@ -21,7 +21,7 @@ export const DesktopSidebar = () => {
 
     return (
     <>
-        <div className="bg-black h-screen hidden lg:flex flex-col fixed top- left-0 z-50 w-[270px] !shadow-xl  !shadow-black">
+        <div className="bg-black h-screen hidden lg:flex flex-col fixed top-0 left-0 z-50 w-[270px] !shadow-xl  !shadow-black">
         <Sidebar
         width={"270px"}
         mode="dark"

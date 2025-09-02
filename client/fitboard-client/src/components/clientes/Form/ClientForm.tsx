@@ -20,7 +20,7 @@ export const ClientForm = () => {
 
         console.log("Plan seleccionado:", form.plan_id);
 
-        const nuevoCliente: Cliente = { id: crypto.randomUUID(), ...form, estado: 'activo', plan_id: form.plan_id || null, creado_en: "" };
+        const nuevoCliente: Cliente = { id: crypto.randomUUID(), ...form, estado: 'activo', plan_id: form.plan_id || null, creado_en: "", vence: "" };
         const errores: typeof error = {};
         if (!form.nombre) errores.nombre = "Nombre es obligatorio";
             else if (form.nombre.length < 3) errores.nombre = "El nombre debe tener al menos 3 caracteres";
@@ -56,7 +56,7 @@ export const ClientForm = () => {
     };
 
     return (
-        <Form validationErrors={error}  onSubmit={handleSubmit} className='lg:bg-black/90 !text-white  rounded-2xl shadow-2xl shadow-black w-135 h-auto !flex !flex-col !gap-9  !m-10 !p-20'>
+        <Form validationErrors={error}  onSubmit={handleSubmit} className='lg:bg-black/90 w-screen !text-white  rounded-2xl shadow-2xl shadow-black md:w-140 h-auto !flex !flex-col !gap-9 !m-5 !ml-7 !p-20'>
             <h1 className='!major-mono-display-regular text-white !ml-25 !mb-3 concert-one-regular text-3xl font-bold'>Crear Cliente</h1>
             <Input
                 name='nombre'

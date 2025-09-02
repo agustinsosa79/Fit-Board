@@ -12,7 +12,7 @@ export const Planes = () => {
   </div>
 
   {/* Lista de planes */}
-  <div className="w-1/2 bg-black/90 rounded-xl shadow-2xl shadow-black !m-10">
+  <div className="w-1/2 bg-black/90 rounded-xl shadow-2xl shadow-black !m-8">
     <ListaPlanes />
   </div>
 </div>

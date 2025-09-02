@@ -27,15 +27,15 @@ useEffect(() => {
 }, []);
 
   return (
-    <main className="min-h-screen bg-gray-950 text-white !p-8">
-  <h1 className="!text-3xl !ml-15 font-bold !mb-8 concert-one-regular">DASHBOARD</h1>
+    <main className="min-h-screen  bg-gray-950 text-white md:!p-10 !p-2 sm:flex-1/2 ">
+  <h1 className="md:!text-3xl md:!ml-15 text-center text-2xl font-bold !mb-8 concert-one-regular">DASHBOARD</h1>
 
   {loading ? (
-    <div className="flex !justify-center !items-center !h-40">
+    <div className="flex !justify-center  !h-40">
       <Spinner size="lg" />
     </div>
   ) : (
-    <div className="grid !ml-15 grid-cols-1 md:grid-cols-2 lg:grid-cols-4  !gap-6">
+    <div className=" !grid md:!ml-15 !items-start w-full grid-cols-2 md:!grid-cols-4 lg:grid-cols-1  !gap-10 !m-0">
       <ClientesTotales  loading={loading} />
       <ClientesActivos />
       <ClientesInactivos />

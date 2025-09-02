@@ -10,6 +10,7 @@ import {
   PointElement,
   Tooltip,
   Legend,
+  Filler,
 } from "chart.js";
 import { useClients } from "../../../context/clientes-context/ClientesContext";
 import dayjs from "dayjs";
@@ -28,7 +29,8 @@ ChartJS.register(
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend, 
+    Filler
 );
 ChartJS.defaults.font.family = "Roboto, sans-serif"
 ChartJS.defaults.font.weight = "normal"
@@ -66,17 +68,21 @@ const ReportesClientes = () => {
 
   // gráfico de barras
     const dataBar = {
-    labels: ["Activos", "Inactivos", "Nuevos"],
-    datasets: [
+  labels: ["Activos", "Inactivos", "Nuevos"],
+  datasets: [
     {
-        label: "Clientes",
-        color: "#fff",
-        data: [activos, inactivos, nuevos],
-        backgroundColor: ["#4ade80", "#f87171", "#60a5fa"],
-        borderRadius: 5,
-      },
-    ],
-  };
+      label: "Clientes",
+      data: [activos, inactivos, nuevos],
+      backgroundColor: [
+        "#3b82f6", // Tailwind blue-500
+        "#ef4444", // Tailwind red-500
+        "#22c55e", // Tailwind green-500
+      ],
+      borderColor: "#1f2937", // Tailwind gray-800
+      borderWidth: 2,
+    },
+  ],
+};
 
   // gráfico de dona
   const dataDoughnut = {
@@ -103,32 +109,68 @@ const dataLine = {
   labels: labelsLine,
   datasets: [
     {
-      label: "Clientes Nuevos Últimos 7 Días",
+      label: "Últimos 7 Días",
       data: dataLineValues,
       borderColor: "#60a5fa",
       backgroundColor: "#60a5fa",
       tension: 0.3,
-      fill: false,
+      borderWitdh: 3,
+      fill: true
     },
   ],
 };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 !p-10">
-      <div className="!p-10 bg-gradient-to-r to-black/50 h-110 rounded-2xl shadow-xl border border-white/10 shadow-black">
-        <h3 className="text-white text-center concert-one-regular text-lg !mb-4">Distribución de Clientes</h3>
-        <Bar className="!p-10 !h-auto" data={dataBar} options={{responsive: true}}/>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-center items-center p-0 md:!p-10">
+      <div className="md:!p-10 !p-2 text-xs flex flex-col items-center bg-gradient-to-r !max-w-full h-60 to-black/50  md:!w-auto md:h-110 rounded-2xl shadow-xl border border-white/10 shadow-black">
+        <h3 className="text-white text-center concert-one-regular text-lg md:!mb-4 md:text-2xl !mb-10">Distribución de Clientes</h3>
+        <Bar className="md:!p-0 md:object-contain !size-60 !p-0 text-xs md:!size-130 !h-auto " data={dataBar} options={{responsive: true,  scales: {
+      x: {
+        grid: {
+          color: "#4b5563", // líneas del fondo eje X (Tailwind gray-600)
+        },
+        ticks: {
+          color: "#fff", // texto del eje X
+        },
+      },
+      y: {
+        grid: {
+          color: "#4b5563", // líneas del fondo eje Y
+        },
+        ticks: {
+          color: "#fff", // texto del eje Y
+        },
+      },
+    },
+  }}/>
       </div>
 
-      <div className="!p-10 border border-white/10 !h-110 bg-gradient-to-r flex flex-col align-center  to-black/50 rounded-2xl shadow-xl shadow-black">
-        <h3 className="text-white text-lg text-center concert-one-regular !mb-4">Activos vs Inactivos</h3>
-        <Doughnut className="!p-10 !h-90 !w-90 !ml-38" data={dataDoughnut} options={{responsive: true}} />
+      <div className="md:!p-10 !p-2 text-xs flex flex-col items-center bg-gradient-to-r !max-w-full h-60 to-black/50  md:!w-auto md:h-110 rounded-2xl shadow-xl border border-white/10 shadow-black">
+        <h3 className="text-white text-lg md:text-lg text-center concert-one-regular !mb-4">Activos vs Inactivos</h3>
+        <Doughnut className="md:!p-10 !object-contain text-xs !size-40 md:!h-90 md:!w-90 " data={dataDoughnut} options={{responsive: true}} />
       </div>
 
 
-      <div className="!p-12 !h-80 bg-gradient-to-r to-black/50 border border-white/10 rounded-2xl shadow-xl shadow-black md:col-span-2">
+      <div className="!p-12 !h-80 bg-gradient-to-r to-black/50 border border-white/10 rounded-2xl shadow-xl shadow-black col-span-1 md:col-span-2">
     <h3 className="text-white  concert-one-regular text-xl text-center !mb-4">Clientes Nuevos</h3>
-    <Line data={dataLine} options={{ responsive: true, maintainAspectRatio: false }} />
+    <Line className="md:!max-w-full max-w-w-full object-contain" data={dataLine} options={{ responsive: true, maintainAspectRatio: false, scales: {
+      x: {
+        grid: {
+          color: "#4b5563", // líneas del fondo eje X (Tailwind gray-600)
+        },
+        ticks: {
+          color: "#fff", // texto del eje X
+        },
+      },
+      y: {
+        grid: {
+          color: "#4b5563", // líneas del fondo eje Y
+        },
+        ticks: {
+          color: "#fff", // texto del eje Y
+        },
+      },
+    }, }} />
   </div>
     </div>
 

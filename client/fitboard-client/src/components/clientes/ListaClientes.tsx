@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useClients } from "../../context/clientes-context/ClientesContext";
 import { deleteCliente, fetchClientes } from "../../services/clientesService";
-import { Button, Alert,Modal, ModalContent, ModalHeader, ModalFooter, ModalBody, useDisclosure } from "@heroui/react";
+import { Button, Alert,Modal, ModalContent, ModalHeader, ModalFooter, ModalBody, useDisclosure, ScrollShadow } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
@@ -71,7 +71,7 @@ export const ListaClientes: React.FC = () => {
         c.nombre.toLowerCase().includes(q) ||
         (c.email && c.email.toLowerCase().includes(q)) ||
         (c.dni && String(c.dni).includes(q)) ||
-        (c.vence && c.vence.toLowerCase())
+        (c.vence && c.vence.toLowerCase().includes(q))
       );
     });
   }, [clientesConVencimiento, debounceQuery, filter]);
@@ -84,7 +84,6 @@ export const ListaClientes: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Eliminar un cliente (optimista y seguro)
   const handleDeleteOne = async (id: string) => {
     const cliente = clientesConVencimiento.find((c) => c.id === id);
 
@@ -126,31 +125,19 @@ export const ListaClientes: React.FC = () => {
 
 
   return (
-    <div className=" w-200 !m-6 lg:!m-5 rounded-2xl bg-black/90 shadow-2xl  overflow-y-none shadow-black !p-20">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="concert-one-regular text-white text-2xl font-bold !mr-0 !mb-10 ">Lista de Clientes</h1>
-            <p className="!flex gap-2 w-50 !bg-gray-600/20 !border-gray-600/30 !justify-center !p-2 !mb-2 !rounded-lg border text-white">
+    <div className=" w-80% md:w-200 !p-3  !m-6 lg:!m-5 rounded-2xl bg-black/90 shadow-2xl  overflow-y-hidden shadow-black md:!p-20 ">
+      <div className="flex md:items-end md:justify-between mb-6">
+          <h1 className="concert-one-regular text-white text-lg md:text-2xl font-bold !mr-0 !mb-3 ">Lista de Clientes</h1>
+            <p className=" hidden md:!flex md:!mt-18 gap-2 flex-col md:flex-row md:w-80 !bg-gray-600/20 !border-gray-600/30 !justify-center !p-2 !mb-2 !rounded-lg border text-white">
             <span>Total: {clientes.length}</span>
-            <span className="!pl-2">Mostrando: {filtered.length}</span>
+            <span className="md:!pl-2  hidden md:flex">Mostrando: {filtered.length}</span>
             </p>
-        </div>
 
-        <div className="flex items-center gap-3 !mt-17 !p-3 !ml-2">
-          <div className="flex items-center bg-white/5 rounded-lg border-amber-50/10 border px-3 py-2 gap-2">
-            <SearchIcon className="text-gray-300 !m-2" />
-            <input
-              value={query}
-              onChange={(e) => { setQuery(e.target.value); setPage(1); }}
-              placeholder="Buscar por nombre, email o DNI..."
-              className="bg-transparent text-white placeholder-gray-400 outline-none w-65"
-            />
-          </div>
-
+        <div className="md:flex items-center !grid-cols-1 md:grid-row-1 gap-3 !mt-17 !p-2 !ml-2">
           <select
             value={filter}
             onChange={(e) => { setFilter(e.target.value as "all" | "activo" | "inactivo"); setPage(1); }}
-            className="!bg-white/5 text-white !px-2 !py-2 rounded-md border border-gray-600/30 "
+            className="!bg-white/5 text-white !px-9 !py-2 rounded-md border border-gray-600/30 "
           >
             <option className="!bg-black/90" value="all">Todos</option>
             <option className="bg-black/90" value="activo">Activos</option>
@@ -158,6 +145,15 @@ export const ListaClientes: React.FC = () => {
           </select>
         </div>
       </div>
+          <div className="flex items-center md:m-0 !mb-2 bg-white/5 rounded-lg border-amber-50/10 border !px-3  md:!gap-2">
+            <SearchIcon className="text-gray-300 !m-2" />
+            <input
+              value={query}
+              onChange={(e) => { setQuery(() => e.target.value); setPage(1); }}
+              placeholder="Buscar por nombre, email o DNI..."
+              className="bg-transparent text-white placeholder-gray-400 outline-none w-full md:m-0 md:w-58"
+            />
+          </div>
 
       <AnimatePresence>
         {message && (
@@ -171,7 +167,7 @@ export const ListaClientes: React.FC = () => {
 
 
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 overflow-y ">
+      <ScrollShadow hideScrollBar className="grid grid-cols-1 md:grid-cols-2 gap-5 md:w-full md:h-100 w-[250px] h-[280px] ">
         {loading ? (
             Array.from({ length: PER_PAGE }).map((_, i) => (
             <div key={i} className="p-4 rounded-lg bg-white/4 border border-white/8 animate-pulse !h-28" />
@@ -180,20 +176,20 @@ export const ListaClientes: React.FC = () => {
         <div className="!p-6 rounded-lg bg-white/4 border border-white/8 col-span-full text-gray-300">No hay clientes que coincidan.</div>
     ) : (
         pageItems.map((cliente) => (
-            <div key={cliente.id} className="!p-5 !mt-2 rounded-lg bg-white/4 border border-white/8 flex justify-between items-start gap-4">
+            <div key={cliente.id} className="md:!p-5 md:!mt-2 !p-2 rounded-lg bg-white/4 border border-white/8 flex justify-between items-start gap-4">
               <div>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-white/8 flex items-center justify-center text-white font-semibold uppercase">
                     {cliente?.nombre.slice(0, 1) ?? "?"}
                   </div>
                   <div>
-                    <div className="text-white font-semibold">{cliente.nombre}</div>
+                    <div className="text-white text-sm md:text-md font-semibold">{cliente.nombre}</div>
                   </div>
                 </div>
 
                 <div className="!mt-3 text-gray-300 !text-sm">
-                  <div><span className="font-medium text-white mr-2">DNI: </span>{cliente.dni}</div>
-                  <div className="!mt-1"><span className="font-medium text-white mr-2">Estado: </span>{cliente.estado}</div>
+                  <div><span className="!font-medium !text-xs md:text-md text-white mr-2">DNI: </span>{cliente.dni}</div>
+                  <div className="!mt-1"><span className="font-medium !text-xs md:text-md text-white mr-2">Estado: </span>{cliente.estado}</div>
                 </div>
               </div>
 
@@ -208,7 +204,7 @@ export const ListaClientes: React.FC = () => {
             </div>
           ))
         )}
-      </div>
+      </ScrollShadow>
       
       <Modal
   backdrop="opaque"
@@ -226,11 +222,11 @@ export const ListaClientes: React.FC = () => {
     </ModalHeader>
 
     {/* BODY */}
-    <ModalBody className="!space-y-8">
+    <ModalBody className="!space-y-8  !overflow-hidden">
       
       {/* Datos personales */}
       <section>
-        <h4 className="!font-semibold !text-xl !mb-4 !border-b !border-white/10 !pb-2">
+        <h4 className="!font-semibold !text-xl !mb-4 !border-b !border-white/10 !pb-2 !overflow-hidden">
           Datos personales
         </h4>
 
@@ -322,7 +318,7 @@ export const ListaClientes: React.FC = () => {
 
       {/* paginado */}
       <div className="flex items-center justify-between !mt-4">
-        <div className="text-gray-300">
+        <div className="text-gray-300 text-xs">
           Página {page} / {totalPages}
         </div>
 

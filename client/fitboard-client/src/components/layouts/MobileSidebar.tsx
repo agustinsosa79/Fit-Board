@@ -16,17 +16,6 @@ import {
 import { useNavigate, useLocation } from "react-router";
 import logo from "../../assets/logo-fit.png"; // Asegúrate de que la ruta sea correcta
 
-export const AcmeLogo = () => (
-  <svg fill="none" height="36" viewBox="0 0 32 32" width="36" aria-hidden>
-    <path
-      clipRule="evenodd"
-      d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-      fill="currentColor"
-      fillRule="evenodd"
-    />
-  </svg>
-);
-
 interface Props {
   isOpen: boolean;
   setIsOpen: (v: boolean) => void;
@@ -49,20 +38,15 @@ export default function MobileSidebar({ isOpen, setIsOpen }: Props) {
 
   return (
     <>
-      <div
-        onClick={() => isOpen && setIsOpen(false)}
-        className={`fixed inset-0 transition-opacity`}
-        aria-hidden={!isOpen}
-      />
 
       <Navbar
-  className="sm:hidden  top-0 bg-black h-25 left-0 w-full z-4"
+  className="sm:hidden  !top-0 bg-black border-none !p-4 !h-auto left-0 w-full z-5"
   isBordered
   isMenuOpen={isOpen}
   onMenuOpenChange={setIsOpen}
   shouldHideOnScroll
 >
-  <NavbarContent justify="center" className="hiddeb sm:flex gap-4">
+  <NavbarContent justify="center" className=" sm:flex gap-4">
     <NavbarMenuToggle aria-label={isOpen ? "Close menu" : "Open menu"} style={{padding: "1rem"}} />
   </NavbarContent>
 
@@ -73,7 +57,7 @@ export default function MobileSidebar({ isOpen, setIsOpen }: Props) {
   </NavbarContent>
 
   {/* NAVBAR MENU: HeroUI ya lo controla */}
-  <NavbarMenu className=" bg-black/98 h-max border backdrop-blur-xs rounded-b-md p-10 shadow-2xl" style={{marginTop: "2rem"}}>
+  <NavbarMenu className=" bg-black/98 h-max border backdrop-blur-xs rounded-b-md !p-10 shadow-2xl" style={{marginTop: "2rem"}}>
     {MENU.map((item) => (
       <NavbarMenuItem key={item.path} className="w-full pl-10" style={{marginLeft: "3px"}}>
         <button
@@ -81,7 +65,7 @@ export default function MobileSidebar({ isOpen, setIsOpen }: Props) {
             setIsOpen(false);
             navigate(item.path);
           }}
-          className="w-full text-left flex items-center px-4 py-3 rounded-lg bg-white/2 gap-5 h-20 transition-colors size-3.5 font-bold hover:bg-white/10 focus:bg-white/10"
+          className="w-full !text-left flex items-center !px-4 !py-3 rounded-lg bg-white/2 gap-5 h-20 transition-colors size-3.5 font-bold hover:bg-white/10 focus:bg-white/10"
         >
           <item.Icon className="w-5 h-5 text-white" />
           <span className="text-white">{item.label}</span>

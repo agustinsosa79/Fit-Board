@@ -137,7 +137,7 @@ export const ListaPlanes: React.FC = () => {
         <p className="text-gray-400 text-center">No hay planes disponibles</p>
       )}
 
-      <ScrollShadow hideScrollBar className="w-[750px] h-[700px]">
+      <ScrollShadow hideScrollBar className="w-[750px] h-[718px]">
         <div className="!grid grid-cols-1 sm:grid-cols-2 !lg:grid-cols-3 !gap-0 !p-0">
           {planes.map(({ id, precio, nombre, duracion, descripcion }) => (
             <Card key={id} shadow="sm" className=" text-white  !p-5 !ml-10 !mt-2 rounded-lg bg-white/4 border border-white/8">

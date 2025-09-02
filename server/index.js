@@ -14,8 +14,8 @@ const allowedOrigins = [
   'https://fit-board-client.vercel.app',   // producción original
   'https://fit-board-wqjq.vercel.app',     // tu frontend actual en Vercel
   'https://fit-board-wqjq-h40q6n43o-agustinsosa79s-projects.vercel.app',
-  'https://fit-board-wqjq-git-master-agustinsosa79s-projects.vercel.app/login',
-  'https://fit-board-wqjq-h40q6n43o-agustinsosa79s-projects.vercel.app/login'
+  'https://fit-board-wqjq-git-master-agustinsosa79s-projects.vercel.app',
+  'https://fit-board-wqjq-h40q6n43o-agustinsosa79s-projects.vercel.app'
 ];
 
 
@@ -24,16 +24,17 @@ const app = express();
 app.use(cookieParser());
 
 app.use(cors({
-    origin: function(origin, callback){
-    if (!origin) return callback(null, true); // para requests desde Postman o curl
+  origin: function(origin, callback){
+    if (!origin) return callback(null, true); // Postman, curl
     if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
+      callback(null, true);
     } else {
-      return callback(new Error('Not allowed by CORS'));
+      console.log('CORS blocked:', origin);
+      callback(new Error('Not allowed by CORS'));
     }
   },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
+  credentials: true,
+  methods: ['GET','POST','PUT','DELETE']
 }));
 
 app.use(express.json());

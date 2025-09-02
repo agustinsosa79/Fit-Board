@@ -19,10 +19,13 @@ export const registerAdmin = async (req, res) => {
 
 export const loginAdmin = async (req, res) => {
     const { email, password } = req.body;
+     console.log("Intentando login con:", email);
+     console.log("int password", password);
+     
 
     try {
         const admin = await getAdminByEmail(email);
-
+        console.log(admin);
         
         if (!admin) {
             return res.status(404).json({ error: 'Admin no encontrado' });
@@ -80,7 +83,7 @@ export const refresh = (req, res) => {
         res.cookie("token", newToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "Strict",
+            sameSite: "None",
             maxAge: 60 * 60 * 1000 // 1 hora
         });
 

@@ -40,6 +40,12 @@ app.use(cors({
 app.use(express.json());
 
 
+console.log('DB_HOST:', process.env.DB_HOST);
+console.log('DB_PORT:', process.env.DB_PORT);
+console.log('DB_USER:', process.env.DB_USER);
+console.log('DB_NAME:', process.env.DB_NAME);
+
+
 app.use('/api/auth', authRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/clientes', clientesRouter);

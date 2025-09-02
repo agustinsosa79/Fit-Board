@@ -1,6 +1,6 @@
 // ClientesTotales.tsx
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
-import { useClients } from "../../../context/clientes-context/ClientesContext";
+import { useClients } from "../../../context/clientescontext/ClientesContext";
 
 interface ClientesTotalesProps {
   loading: boolean;

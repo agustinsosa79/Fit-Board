@@ -1,6 +1,6 @@
 // src/components/clientes/ListaClientes.tsx
 import React, { useEffect, useMemo, useState } from "react";
-import { useClients } from "../../context/clientes-context/ClientesContext";
+import { useClients } from "../../context/clientescontext/ClientesContext";
 import { deleteCliente, fetchClientes } from "../../services/clientesService";
 import { Button, Alert,Modal, ModalContent, ModalHeader, ModalFooter, ModalBody, useDisclosure, ScrollShadow } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -8,8 +8,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
 import type { Cliente } from "../../types/clientes";
 import InfoIcon from '@mui/icons-material/Info';
-import { usePlanes } from "../../context/planes-context/PlanesContext";
-import { useProvideAuth } from "../../context/clientes-context/useProvideAuth";
+import { usePlanes } from "../../context/planescontext/PlanesContext";
+import { useProvideAuth } from "../../context/clientescontext/useProvideAuth";
 import { useFechaVencimiento } from "./vencimiento/ClienteVence";
 
 const PER_PAGE = 6;

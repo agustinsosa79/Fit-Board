@@ -1,5 +1,5 @@
 import PersonOffOutlinedIcon from "@mui/icons-material/PersonOffOutlined";
-import { useClients } from "../../../context/clientes-context/ClientesContext";
+import { useClients } from "../../../context/clientescontext/ClientesContext";
 
 
 export const ClientesInactivos = () => {

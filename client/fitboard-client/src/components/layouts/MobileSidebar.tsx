@@ -22,7 +22,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useNavigate, useLocation } from "react-router";
 import logo from "../../assets/logo-fit.png"; // Asegúrate de que la ruta sea correcta
-import { useAuth } from "../../context/clientes-context/useAuth";
+import { useAuth } from "../../context/clientescontext/useAuth";
 
 interface Props {
   isOpenNav: boolean;

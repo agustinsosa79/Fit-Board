@@ -1,6 +1,6 @@
 import { Form, Input, Button } from "@heroui/react";
 import { useState, useRef } from "react";
-import { useAuth } from "../context/clientes-context/useAuth";
+import { useAuth } from "../context/clientescontext/useAuth";
 import { useNavigate } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import  logo  from "../assets/logo-fit.png"; // Asegúrate de que la ruta sea correcta

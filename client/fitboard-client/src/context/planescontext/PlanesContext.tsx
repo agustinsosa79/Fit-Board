@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getPlanes, createPlan, deletePlan, updatePlan} from "../../services/planesService";
 import type { Planes } from "../../types/planes";
-import { useAuth } from "../clientes-context/useAuth";
+import { useAuth } from "../clientescontext/useAuth";
 
 interface PlanesContextType {
   planes: Planes[];

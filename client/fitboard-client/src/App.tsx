@@ -1,5 +1,5 @@
 import { HeroUIProvider, ToastProvider } from '@heroui/react'
-import { AuthProvider } from './context/clientes-context/AuthProvider'
+import { AuthProvider } from './context/clientescontext/AuthProvider'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom' 
 import { Login } from './pages/Login' 
@@ -8,8 +8,8 @@ import { Dashboard } from './pages/Dashboard'
 import { Clientes } from './pages/Clientes'
 import { Planes } from './pages/Planes'
 import {Layout} from './components/layouts/Layout'
-import { ClientesProvider } from './context/clientes-context/ClientesContext'
-import { PlanesProvider } from './context/planes-context/PlanesContext'
+import { ClientesProvider } from './context/clientescontext/ClientesContext'
+import { PlanesProvider } from './context/planescontext/PlanesContext'
 
 function App() {
 

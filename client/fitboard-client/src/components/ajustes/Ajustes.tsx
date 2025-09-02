@@ -1,4 +1,4 @@
-import { useAuth } from "../../context/clientes-context/useAuth";
+import { useAuth } from "../../context/clientescontext/useAuth";
 
 
 export const Ajustes = () => {

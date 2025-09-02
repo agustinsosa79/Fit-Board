@@ -1,6 +1,6 @@
 import dayjs from "dayjs"
-import { useClients } from "../../../context/clientes-context/ClientesContext"
-import { usePlanes } from "../../../context/planes-context/PlanesContext"
+import { useClients } from "../../../context/clientescontext/ClientesContext"
+import { usePlanes } from "../../../context/planescontext/PlanesContext"
 
 export const useFechaVencimiento = () => {
     const {planes} = usePlanes()

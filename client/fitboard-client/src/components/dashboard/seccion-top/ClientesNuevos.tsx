@@ -1,6 +1,6 @@
 import InsertChartOutlinedSharpIcon from '@mui/icons-material/InsertChartOutlinedSharp';
 import dayjs from "dayjs";
-import { useClients } from "../../../context/clientes-context/ClientesContext";
+import { useClients } from "../../../context/clientescontext/ClientesContext";
 
 export const ClientesNuevos = ({ loading }: { loading: boolean }) => {
 

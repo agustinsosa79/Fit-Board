@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { type Cliente } from '../../../types/clientes';
+import { type Cliente } from '../../../types/clientes.ts';
 import { createCliente } from '../../../services/clientesService';
-import { useClients } from '../../../context/clientes-context/ClientesContext';
+import { useClients } from '../../../context/clientescontext/ClientesContext.tsx';
 import { Form, Input, Button, Alert, Select, SelectItem } from '@heroui/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { usePlanes } from '../../../context/planes-context/PlanesContext';
+import { usePlanes } from '../../../context/planescontext/PlanesContext.tsx';
 
 export const ClientForm = () => {
     const { agregarCliente } = useClients();

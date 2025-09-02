@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Planes } from "../../../types/planes";
-import { usePlanes } from "../../../context/planes-context/PlanesContext";
+import { usePlanes } from "../../../context/planescontext/PlanesContext";
 import { Button, Form, Input } from "@heroui/react";
 
 

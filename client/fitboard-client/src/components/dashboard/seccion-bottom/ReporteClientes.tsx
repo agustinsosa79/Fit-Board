@@ -12,9 +12,9 @@ import {
   Legend,
   Filler,
 } from "chart.js";
-import { useClients } from "../../../context/clientes-context/ClientesContext";
+import { useClients } from "../../../context/clientescontext/ClientesContext";
 import dayjs from "dayjs";
-import { useAuth } from "../../../context/clientes-context/useAuth";
+import { useAuth } from "../../../context/clientescontext/useAuth";
 import { useEffect } from "react";
 import type { Cliente } from "../../../types/clientes";
 import { fetchClientes } from "../../../services/clientesService";

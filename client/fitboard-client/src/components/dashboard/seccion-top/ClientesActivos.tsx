@@ -1,5 +1,5 @@
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import { useClients } from "../../../context/clientes-context/ClientesContext";
+import { useClients } from "../../../context/clientescontext/ClientesContext";
 
 
 export const ClientesActivos = () => {

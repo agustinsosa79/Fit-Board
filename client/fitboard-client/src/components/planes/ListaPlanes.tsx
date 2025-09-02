@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { usePlanes } from "../../context/planes-context/PlanesContext";
+import { usePlanes } from "../../context/planescontext/PlanesContext";
 import {
   Card,
   CardHeader,
@@ -15,9 +15,9 @@ import {
   Input,
 } from "@heroui/react";
 import { Button } from "@heroui/react";
-import { useClients } from "../../context/clientes-context/ClientesContext";
+import { useClients } from "../../context/clientescontext/ClientesContext";
 import type { Planes } from "../../types/planes";
-import { useProvideAuth } from "../../context/clientes-context/useProvideAuth";
+import { useProvideAuth } from "../../context/clientescontext/useProvideAuth";
 import { getPlanes } from "../../services/planesService";
 
 export const ListaPlanes: React.FC = () => {

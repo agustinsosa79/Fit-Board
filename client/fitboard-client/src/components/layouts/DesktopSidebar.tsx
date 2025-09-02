@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import ArticleIcon from '@mui/icons-material/Article';
 import logo from "../../assets/logo-fit.png"; 
-import { useAuth } from "../../context/clientes-context/useAuth";
+import { useAuth } from "../../context/clientescontext/useAuth";
 import { useDisclosure, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@heroui/react";
 
 

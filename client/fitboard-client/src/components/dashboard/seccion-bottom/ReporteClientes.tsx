@@ -57,7 +57,6 @@ const ReportesClientes = () => {
     loadClientes()
   }, [user, loading, setClientes])
 
-  // procesamos tus datos
     const activos = Array.isArray(clientes) ? clientes.filter(c => c.estado === "activo").length : 0
     const inactivos = Array.isArray(clientes) ? clientes.filter(c => c.estado === "inactivo").length : 0
     const nuevos = Array.isArray(clientes) ? clientes.filter(c => {
@@ -121,7 +120,7 @@ const dataLine = {
 };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-center items-center p-0 md:!p-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-center items-center p-0 md:!p-40 ">
       <div className="md:!p-10 !p-2 text-xs flex flex-col items-center bg-gradient-to-r !max-w-full h-60 to-black/50  md:!w-auto md:h-110 rounded-2xl shadow-xl border border-white/10 shadow-black">
         <h3 className="text-white text-center concert-one-regular text-lg md:!mb-4 md:text-2xl !mb-10">Distribución de Clientes</h3>
         <Bar className="md:!p-0 md:object-contain !size-60 !p-0 text-xs md:!size-130 !h-auto " data={dataBar} options={{responsive: true,  scales: {

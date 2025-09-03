@@ -50,7 +50,7 @@ export const useProvideAuth = (): AuthContextType => {
     }
   };
 
-  const isAuthenticated = () => !!user;
+  const isAuthenticated = () => !!user ;
 
   useEffect(() => {
     const fetchUser = async () => {
